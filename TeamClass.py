@@ -19,7 +19,12 @@ class Team:
         
         self.players = {}
         self.get_players(self.id, self.year)
-        print(self.players)
+        
+        self.wins = ""
+        self.get_wins()
+        
+        self.rank = ""
+        self.get_rank()        
         
     
     def get_players(self, ID, year):
@@ -28,14 +33,52 @@ class Team:
         with open("Appearances.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
-                if row[0] == year and row[1] == ID:
+                if row[0] == self.year and row[1] == self.id:
                     self.players[row[3]] = Player(row[3])
+    
+    
+    def size(self):
+        # returns size of team
+        return len(self.players)
+    
+    def get_wins(self):
+        # goes through team file, finds amount of wins and losses
+        # for the year, and gets win percentage
+        with open("Teams.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[0] == self.year and row[2] == self.id:
+                    wins = int(row[8])
+                    losses = int(row[9])
+                    self.wins = wins / (wins + losses)
+
+    def return_wins(self):
+        # returns win percentage
+        return self.wins  
+
+    def get_rank(self):
+        #goes through the team file and gets team rank
+         with open("Teams.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[0] == self.year and row[2] == self.id:
+                    self.rank = row[5]
+                    
+    def return_rank(self):
+        # returns team's rank at end of season
+        return self.rank
+        
             
     def __repr__(self):
-        roster = []
+        # when the object is printed, it gives a string of the 
+        # names of all the player objects in team
+        roster = ""
         for key, value in self.players.items():
-            roster.append(value)
-        return "p"
+            name = value.return_name()
+            roster += name + ", "
+        return roster
+
+
     
 
                     

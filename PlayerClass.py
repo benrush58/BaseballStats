@@ -35,6 +35,18 @@ class Player:
         
         self.post_ERA = {}
         self.get_post_ERA(self.id)
+        
+        self.bat_hr = {}
+        self.get_bat_hr(self.id)
+        
+        self.post_bat_hr = {}
+        self.get_post_bat_hr(self.id)
+        
+        self.pitch_hr = {}
+        self.get_pitch_hr(self.id)
+        
+        self.post_pitch_hr = {}
+        self.get_post_pitch_hr = {}
     
     # Generic Info     
     def get_id(self, First, Last):
@@ -58,6 +70,8 @@ class Player:
     def return_id(self):
         ID = self.id
         return ID
+    def return_name(self):
+        return self.name
     
     
     # Batting Stats!!!
@@ -97,6 +111,39 @@ class Player:
             return self.post_bat_avg
      
         
+    def get_bat_hr(self, ID):
+        # uses player id to get batter's hr number
+        with open("Batting.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row == ID:
+                    self.bat_hr[row[1]] = row[11]
+                    
+    def return_bat_hr(self, year = ""):
+        # return the batter's hrs, either all years or specified year
+        if year:
+            return self.bat_hr[year]
+        else:
+            return self.bat_hr
+    
+                
+    def get_post_bat_hr(self, ID):
+        # uses player id to get batter's post hr number
+        with open("BattingPost.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row == ID:
+                    self.post_bat_hr[row[0]] = row[11]
+                    
+    def return_post_bat_hr(self, year = ""):
+        # return the batter's hrs post season, either all years or specified year
+        if year:
+            return self.post_bat_hr[year]
+        else:
+            return self.post_bat_hr
+    
+            
+    
     # Pitching stats!!!
     def get_ERA(self, ID):
         # uses player ID to get their ERA
@@ -127,6 +174,41 @@ class Player:
             return self.post_ERA[year]
         else:
             return self.post_ERA 
+      
+    
+    def get_pitch_hr(self, ID):
+        # uses player ID to get the amount of hrs they pitched
+        with open("Pitching.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[0] == ID:
+                    self.pitch_hr[row[1]] = row[15]
+                    
+    def return_pitch_hr(self, year = ""):
+        # return amount of hrs player pitched, either all years or specified year
+        if year:
+            return self.pitch_hr[year]
+        else:
+            return self.pitch_hr 
+                    
+        
+    def get_post_pitch_hr(self, ID):
+        # uses player ID to get the amount of hrs they pitched post season
+        with open("PitchingPost.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[0] == ID:
+                    self.pitch_hr[row[1]] = row[15]
+                    
+    def return_post_pitch_hr(self, year = ""):
+        # return amount of hrs player pitched post, either all years or specified year
+        if year:
+            return self.post_pitch_hr[year]
+        else:
+            return self.post_pitch_hr 
+        
+    
+    # add homeruns from batter and homeruns from pitcher pre and post
         
     # How to print   
     def __repr__(self):
