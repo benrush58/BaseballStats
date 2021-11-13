@@ -6,17 +6,16 @@ Created on Sun Nov  7 20:39:41 2021
 """
 from PlayerClass import Player
 from TeamClass import Team
-import csv
+
 
 # this is where i'm testing some code
 def main():
-   
-    '''
+    """
     Can create player object using either first/last name or player ID
-    Then can get any of the following stats from player. You can also 
-    specify the year for any stat you want. 
-    '''
-    player = Player(First = "Matt", Last = "Barnes")
+    Then can get any of the following stats from player. You can also
+    specify the year for any stat you want.
+    """
+    player = Player(First="Matt", Last="Barnes")
     print(player)
     print("Bat avg", player.return_bat_avg())
     print("Post bat avg", player.return_post_bat_avg())
@@ -26,7 +25,7 @@ def main():
     print("Post batting HRs", player.return_post_bat_hr())
     print("Pitching HRs", player.return_pitch_hr())
     print("Post pitching HRs", player.return_post_pitch_hr())
-    
+
     '''
     To create a team object, give the year and team code. It will create 
     a dictionary containing player objects for all the players in that team 
@@ -41,12 +40,13 @@ def main():
         Astros -> HOU
         Dodgers -> LAN
     '''
-    
+
     team = Team("BOS", "1974")
     print("Players:", team)
     print("Win percentage:", team.return_wins())
     print("Rank:", team.return_rank())
     print("Team Size:", team.size())
-    
+
+
 if __name__ == '__main__':
     main()
