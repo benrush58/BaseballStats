@@ -41,7 +41,7 @@ def main():
         Dodgers -> LAN
     '''
 
-    team = Team("BOS", "1974")
+    team = Team("BOS", "2015")
     print("Players:", team)
     print("Win percentage:", team.return_wins())
     print("Rank:", team.return_rank())

@@ -30,11 +30,11 @@ class Team:
     def get_players(self):
         # goes through Appearances file, creates player object for any player
         # that is in the team that year and adds object to players dict
-        with open("Appearances.csv") as file:
+        with open("FilteredAppearances.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
-                if row[0] == self.year and row[1] == self.id:
-                    self.players[row[3]] = Player(row[3])
+                if row[1] == self.year and row[2] == self.id:
+                    self.players[row[4]] = Player(row[4])
 
     def size(self):
         # returns size of team
@@ -43,12 +43,12 @@ class Team:
     def get_wins(self):
         # goes through team file, finds amount of wins and losses
         # for the year, and gets win percentage
-        with open("Teams.csv") as file:
+        with open("FilteredTeams.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
-                if row[0] == self.year and row[2] == self.id:
-                    wins = int(row[8])
-                    losses = int(row[9])
+                if row[1] == self.year and row[3] == self.id:
+                    wins = int(row[9])
+                    losses = int(row[10])
                     self.wins = wins / (wins + losses)
 
     def return_wins(self):
@@ -57,11 +57,11 @@ class Team:
 
     def get_rank(self):
         # goes through the team file and gets team rank
-        with open("Teams.csv") as file:
+        with open("FilteredTeams.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
-                if row[0] == self.year and row[2] == self.id:
-                    self.rank = row[5]
+                if row[1] == self.year and row[3] == self.id:
+                    self.rank = row[6]
 
     def return_rank(self):
         # returns team's rank at end of season
