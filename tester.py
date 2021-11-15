@@ -15,7 +15,7 @@ def main():
     Then can get any of the following stats from player. You can also
     specify the year for any stat you want.
     """
-    player = Player(First="Matt", Last="Barnes")
+    player = Player("altuvjo01")
     print(player)
     print("Bat avg", player.return_bat_avg())
     print("Post bat avg", player.return_post_bat_avg())
@@ -40,13 +40,13 @@ def main():
         Astros -> HOU
         Dodgers -> LAN
     '''
-
+'''
     team = Team("BOS", "2015")
     print("Players:", team)
     print("Win percentage:", team.return_wins())
     print("Rank:", team.return_rank())
     print("Team Size:", team.size())
-
+'''
 
 if __name__ == '__main__':
     main()
