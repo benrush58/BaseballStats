@@ -79,7 +79,7 @@ class Player:
         with open("FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
-                if row[1] == ID and int(row[7]) != 0:  # get row with player's id
+                if row[1] == ID and int(row[7]) != 0: # get row with player's id
                     avg = int(row[9]) / int(row[7])  # make sure they bat <1
                     self.bat_avg[row[2]] = avg  # divide to get avg
 
@@ -115,8 +115,8 @@ class Player:
         with open("FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
-                if row == ID:
-                    if [row[2]] in self.bat_hr:
+                if row[1] == ID:
+                    if row[2] in self.bat_hr:
                         self.bat_hr[row[2]] += float(row[12])
                     else:
                         self.bat_hr[row[2]] = float(row[12])
@@ -133,7 +133,7 @@ class Player:
         with open("FilteredBattingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
-                if row == ID:
+                if row[3] == ID:
                     if row[1] in self.post_bat_hr:
                         self.post_bat_hr[row[1]] += float(row[12])
                     else:
