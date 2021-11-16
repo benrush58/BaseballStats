@@ -1,13 +1,33 @@
 from TeamClass import Team
 from PlayerClass import Player
 
-astros15 = Team('HOU', '2015')
-astros16 = Team('HOU', '2016')
-astros17 = Team('HOU', '2017')
-astros18 = Team('HOU', '2018')
-astros19 = Team('HOU', '2019')
 
-teams = [astros15, astros16, astros17, astros18, astros19]
+def main():
+    astros15 = Team('HOU', '2015')
+    """
+    astros16 = Team('HOU', '2016')
+    astros17 = Team('HOU', '2017')
+    astros18 = Team('HOU', '2018')
+    astros19 = Team('HOU', '2019')
+    
+    teams = [astros15, astros16, astros17, astros18, astros19]
+    """
 
-for team in teams:
-    print(team.return_wins())
+    reg_ba = astros15.reg_ba()
+    post_ba = astros15.post_ba()
+    reg_era = astros15.reg_era()
+    post_era = astros15.post_era()
+    reg_hra = astros15.reg_hra()
+    post_hra = astros15.post_hra()
+    print(reg_ba)
+    print(post_ba)
+    print(reg_era)
+    print(post_era)
+    print(reg_hra)
+    print(post_hra)
+
+
+if __name__ == '__main__':
+    main()
+
+
