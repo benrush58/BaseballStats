@@ -81,7 +81,12 @@ class Player:
             for row in csv_reader:
                 if row[1] == ID and int(row[7]) != 0: # get row with player's id
                     avg = int(row[9]) / int(row[7])  # make sure they bat <1
-                    self.bat_avg[row[2]] = avg  # divide to get avg
+                    if row[2] in self.bat_avg:
+                        self.bat_avg[row[2]].append(avg)  # divide to get avg
+                    else:
+                        self.bat_avg[row[2]] = [avg]
+            for year, avg in self.bat_avg.items():
+                self.bat_avg[year] = sum(avg) / len(avg)
 
     def return_bat_avg(self, year=""):
         # return the batting average, either all years or specified year
@@ -99,9 +104,11 @@ class Player:
                 if row[3] == ID and int(row[7]) != 0:  # get row with player's id
                     avg = int(row[9]) / int(row[7])  # make sure bat <1
                     if row[1] in self.post_bat_avg:
-                        self.post_bat_avg[row[1]] = (self.post_bat_avg[row[1]] + avg) / 2
+                        self.post_bat_avg[row[1]].append(avg)
                     else:
-                        self.post_bat_avg[row[1]] = avg
+                        self.post_bat_avg[row[1]] = [avg]
+            for year, avg in self.post_bat_avg.items():
+                self.post_bat_avg[year] = sum(avg) / len(avg)
 
     def return_post_bat_avg(self, year=""):
         # return the post batting average, either all years or specified year
@@ -154,9 +161,11 @@ class Player:
             for row in csv_reader:
                 if row[1] == ID:
                     if row[2] in self.ERA:
-                        self.ERA[row[2]] += float(row[20])
+                        self.ERA[row[2]].append(float(row[20]))
                     else:
-                        self.ERA[row[2]] = float(row[20])
+                        self.ERA[row[2]] = [float(row[20])]
+            for year, era in self.ERA.items():
+                self.ERA[year] = sum(era) / len(era)
 
     def return_ERA(self, year=""):
         # return player's ERA, either all years or specified year
@@ -172,9 +181,11 @@ class Player:
             for row in csv_reader:
                 if row[1] == ID:
                     if row[2] in self.post_ERA:
-                        self.post_ERA[row[2]] += float(row[20])
+                        self.post_ERA[row[2]].append(float(row[20]))
                     else:
-                        self.post_ERA[row[2]] = float(row[20])
+                        self.post_ERA[row[2]] = [float(row[20])]
+            for year, era in self.post_ERA.items():
+                self.post_ERA[year] = sum(era) / len(era)
 
     def return_post_ERA(self, year=""):
         # return player's ERA, either all years or specified year
