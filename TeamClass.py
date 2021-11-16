@@ -67,6 +67,74 @@ class Team:
         # returns team's rank at end of season
         return self.rank
 
+    def reg_ba(self):
+        ba_sum = 0
+        num_ba = 0
+        for player in list(self.players.values()):
+            ba = player.return_bat_avg()
+            if self.year in ba.keys():
+                num_ba += 1
+                ba_sum += float(ba[self.year])
+        if num_ba != 0:
+            return ba_sum / num_ba
+        else:
+            return 'No player BAs found'
+
+    def post_ba(self):
+        ba_sum = 0
+        num_ba = 0
+        for player in list(self.players.values()):
+            ba = player.return_post_bat_avg()
+            if self.year in ba.keys():
+                num_ba += 1
+                ba_sum += float(ba[self.year])
+        if num_ba != 0:
+            return ba_sum / num_ba
+        else:
+            return 'No player BAs found'
+
+    def reg_era(self):
+        with open('FilteredTeams.csv') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == self.year and row[3] == self.id:
+                    return row[29]
+
+    def post_era(self):
+        era_sum = 0
+        num_era = 0
+        for player in list(self.players.values()):
+            era = player.return_post_ERA()
+            if self.year in era.keys():
+                num_era += 1
+                era_sum += float(era[self.year])
+        if num_era != 0:
+            return era_sum / num_era
+        else:
+            return 'No player ERAs found'
+
+    def reg_hra(self):
+        with open('FilteredTeams.csv') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == self.year and row[3] == self.id:
+                    return int(row[20]) / int(row[16])
+
+    def post_hra(self):
+        hra_sum = 0
+        num_rows = 0
+        for id, player in list(self.players.items()):
+            with open('FilteredBattingPost.csv') as file:
+                csv_reader = csv.reader(file)
+                for row in csv_reader:
+                    if row[1] == self.year and row[3] == id and int(row[7]) != 0:
+                        hra_sum += int(row[12]) / int(row[7])
+                        num_rows += 1
+        if num_rows != 0:
+            return hra_sum / num_rows
+        else:
+            return 'No player HRs found'
+
     def __repr__(self):
         # when the object is printed, it gives a string of the 
         # names of all the player objects in team

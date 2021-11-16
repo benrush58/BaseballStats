@@ -5,7 +5,7 @@ Created on Wed Nov  3 13:34:44 2021
 @author: angel
 """
 import csv
-from collections import defaultdict
+
 
 class Player:
     # this class takes in the name of a player and then gets all the stats on
@@ -79,7 +79,7 @@ class Player:
         with open("FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
-                if row[1] == ID and int(row[7]) != 0: # get row with player's id
+                if row[1] == ID and int(row[7]) != 0:  # get row with player's id
                     avg = int(row[9]) / int(row[7])  # make sure they bat <1
                     if row[2] in self.bat_avg:
                         self.bat_avg[row[2]].append(avg)  # divide to get avg
@@ -179,7 +179,7 @@ class Player:
         with open("FilteredPitchingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
-                if row[1] == ID:
+                if row[1] == ID and row[20] != 'inf':
                     if row[2] in self.post_ERA:
                         self.post_ERA[row[2]].append(float(row[20]))
                     else:
@@ -204,7 +204,6 @@ class Player:
                         self.pitch_hr[row[2]] += int(row[16])
                     else:
                         self.pitch_hr[row[2]] = int(row[16])
-                    
 
     def return_pitch_hr(self, year=""):
         # return amount of hrs player pitched, either all years or specified year
