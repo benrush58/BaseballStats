@@ -135,6 +135,28 @@ class Team:
         else:
             return 'No player HRs found'
 
+    def pitch_reg_hra(self):
+        with open('FilteredTeams.csv') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == self.year and row[3] == self.id:
+                    return int(row[35]) / (int(row[33]) / 3)
+
+    def pitch_post_hra(self):
+        hra_sum = 0
+        num_rows = 0
+        for id, player in list(self.players.items()):
+            with open('FilteredPitchingPost.csv') as file:
+                csv_reader = csv.reader(file)
+                for row in csv_reader:
+                    if row[2] == self.year and row[1] == id and int(row[13]) != 0:
+                        hra_sum += int(row[16]) / (int(row[13]) / 3)
+                        num_rows += 1
+        if num_rows != 0:
+            return hra_sum / num_rows
+        else:
+            return 'No Pitching HRAs Found'
+
     def __repr__(self):
         # when the object is printed, it gives a string of the 
         # names of all the player objects in team
