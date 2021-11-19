@@ -68,6 +68,7 @@ class Team:
         return self.rank
 
     def reg_ba(self):
+        """ Returns regular season team BA """
         ba_sum = 0
         num_ba = 0
         for player in list(self.players.values()):
@@ -81,6 +82,7 @@ class Team:
             return 'No player BAs found'
 
     def post_ba(self):
+        """ Returns post season team BA """
         ba_sum = 0
         num_ba = 0
         for player in list(self.players.values()):
@@ -94,6 +96,7 @@ class Team:
             return 'No player BAs found'
 
     def reg_era(self):
+        """ Returns regular season team ERA """
         with open('FilteredTeams.csv') as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -101,6 +104,7 @@ class Team:
                     return row[29]
 
     def post_era(self):
+        """ Returns post season team ERA """
         era_sum = 0
         num_era = 0
         for player in list(self.players.values()):
@@ -114,6 +118,7 @@ class Team:
             return 'No player ERAs found'
 
     def reg_hra(self):
+        """ Returns regular season team HR average per at bat """
         with open('FilteredTeams.csv') as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -121,6 +126,7 @@ class Team:
                     return int(row[20]) / int(row[16])
 
     def post_hra(self):
+        """ Returns post season team HR average per at bat """
         hra_sum = 0
         num_rows = 0
         for id, player in list(self.players.items()):
@@ -136,6 +142,7 @@ class Team:
             return 'No player HRs found'
 
     def pitch_reg_hra(self):
+        """ Returns regular season team HR allowed average per inning """
         with open('FilteredTeams.csv') as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -143,6 +150,7 @@ class Team:
                     return int(row[35]) / (int(row[33]) / 3)
 
     def pitch_post_hra(self):
+        """ Returns post season team HR allowed average per inning """
         hra_sum = 0
         num_rows = 0
         for id, player in list(self.players.items()):
