@@ -48,6 +48,7 @@ def main():
     print("Win percentage:", team.return_wins())
     print("Rank:", team.return_rank())
     print("Team Size:", team.size())
+    print("Players:", team.players)
 
 if __name__ == '__main__':
     main()
