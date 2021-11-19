@@ -11,15 +11,30 @@ from PlayerClass import Player
 Could be interesting to tell the story of the slow rise and the dramatic fall of the Sox in these 5 years"""
 
 # No playoff appearance (78-84, not good, last in AL East)
-redsox15 = ('BOS', 2015)
+redsox15 = Team('BOS', 2015)
 # Eliminated in first round (93-69, first in AL East, 3rd in AL, projected to lose in the first round)
-redsox16 = ('BOS', 2016)
+redsox16 = Team('BOS', 2016)
 # Eliminated in first round (93-69 again, first in AL East, 3rd in AL, projected to lose in the first round
-redsox17 = ('BOS', 2017)
+redsox17 = Team('BOS', 2017)
 # Won world series (108-54, first  in AL East, 1st in all of baseball, projected to win the world series
-redsox18 = ('BOS', 2018)
+redsox18 = Team('BOS', 2018)
 # Not close to playoffs, could be interesting to examine the fall off
-redsox19 = ('BOS', 2019)
+redsox19 = Team('BOS', 2019)
 
+# 2015 year:
+# Get batting average and ERA and compare with graph between regular and post
+2015_avg = redsox15.retu
+
+
+# 2016 year:
+
+
+# 2017 year:
+
+
+# 2018 year:
+
+
+# 2019 year
 
 
