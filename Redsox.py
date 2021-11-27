@@ -53,6 +53,11 @@ def main():
     stats = get_team_stats(teams)
     print(stats)
 
+    # Start using graphs to represent this data
+    x_labels = ["2015", "2016", "2017", "2018", '2019']
+
+    x_labels_2 = ["Batting avergae", "ERA", "Home Runs Average", "Pitching HR allowed"]
+
 
 if __name__ == '__main__':
     main()
