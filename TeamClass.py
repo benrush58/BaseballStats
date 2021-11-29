@@ -103,17 +103,20 @@ class Team:
                 if row[1] == self.year and row[3] == self.id:
                     return row[29]
 
+
     def post_era(self):
         """ Returns post season team ERA """
-        era_sum = 0
-        num_era = 0
+        earned_runs = 0
+        innings_pitched = 0
         for player in list(self.players.values()):
-            era = player.return_post_ERA()
-            if self.year in era.keys():
-                num_era += 1
-                era_sum += float(era[self.year])
-        if num_era != 0:
-            return era_sum / num_era
+            er = float(player.return_earned_runs_post(self.year))
+            ip = float(player.return_innings_pitched_post(self.year))
+            earned_runs += er
+            innings_pitched += ip
+        if innings_pitched != 0:
+            # print("Earned runs:", earned_runs)
+            # print("Innings pitched:", innings_pitched)
+            return (9 * earned_runs) / innings_pitched
         else:
             return 'No player ERAs found'
 

@@ -67,6 +67,7 @@ def graph_regular_vs_post(regular, post, title, y):
     plt.title(title)
     plt.xticks(bar1 + (width / 2), x_labels)
     plt.legend()
+    plt.show()
 
 
 def main():
@@ -83,28 +84,42 @@ def main():
 
     teams = [redsox15, redsox16, redsox17, redsox18, redsox19]
     stats = get_team_stats(teams)
-    print(stats)
+    #print(redsox15.trying_era())
+    #print(redsox16.trying_era())
+    #print(redsox17.trying_era())
+    #print(redsox18.trying_era())
+    #print(redsox19.trying_era())
 
     # Start using graphs to represent this data
     x_labels = ["2015", "2016", "2017", "2018", '2019']
 
     # Charts to make: one chart for each of the 4 stats comparing playoff to regular season performance
-    print(stats["2015"]["reg_era"])
+    # print(stats["2015"]["reg_era"])
     y_label_ba_regular = [stats["2015"]["reg_batavg"], stats["2016"]["reg_batavg"], stats["2017"]["reg_batavg"],
                           stats["2018"]["reg_batavg"], stats["2019"]["reg_batavg"]]
     y_label_ba_post = [stats["2015"]["post_batavg"], stats["2016"]["post_batavg"], stats["2017"]["post_batavg"],
                        stats["2018"]["post_batavg"], stats["2019"]["post_batavg"]]
-    # graph_regular_vs_post(y_label_ba_regular, y_label_ba_post, "Batting Average per Season", "Batting Average")
-    # plt.show()
+    graph_regular_vs_post(y_label_ba_regular, y_label_ba_post, "Batting Average per Season", "Batting Average")
 
     y_label_era_regular = [stats["2015"]["reg_era"], stats["2016"]["reg_era"], stats["2017"]["reg_era"],
                            stats["2018"]["reg_era"], stats["2019"]["reg_era"]]
     y_label_era_post = [stats["2015"]["post_era"], stats["2016"]["post_era"], stats["2017"]["post_era"],
                         stats["2018"]["post_era"], stats["2019"]["post_era"]]
-    print(y_label_era_regular)
-    print(y_label_era_post)
     graph_regular_vs_post(y_label_era_regular, y_label_era_post, "ERA per Season", "ERA")
-    plt.show()
+
+    y_label_hra_regular = [stats["2015"]["reg_hra"], stats["2016"]["reg_hra"], stats["2017"]["reg_hra"],
+                           stats["2018"]["reg_hra"], stats["2019"]["reg_hra"]]
+    y_label_hra_post = [stats["2015"]["post_hra"], stats["2016"]["post_hra"], stats["2017"]["post_hra"],
+                        stats["2018"]["post_hra"], stats["2019"]["post_hra"]]
+    graph_regular_vs_post(y_label_hra_regular, y_label_hra_post, "Home Run Average", "HRA")
+
+    y_label_pitch_hra_regular = [stats["2015"]["pitch_reg_hra"], stats["2016"]["pitch_reg_hra"],
+                                 stats["2017"]["pitch_reg_hra"], stats["2018"]["pitch_reg_hra"],
+                                 stats["2019"]["pitch_reg_hra"]]
+    y_label_pitch_hra_post = [stats["2015"]["pitch_post_hra"], stats["2016"]["pitch_post_hra"],
+                              stats["2017"]["pitch_post_hra"], stats["2018"]["pitch_post_hra"],
+                              stats["2019"]["pitch_post_hra"]]
+    graph_regular_vs_post(y_label_pitch_hra_regular, y_label_pitch_hra_post, "Home Run Average", "HRA")
 
 
 if __name__ == '__main__':

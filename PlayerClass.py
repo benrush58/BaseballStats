@@ -48,6 +48,12 @@ class Player:
         self.post_pitch_hr = {}
         self.get_post_pitch_hr(self.id)
 
+        self.post_pitch_innings = {}
+        self.get_innings_pitched_post(self.id)
+
+        self.post_earned_runs = {}
+        self.get_earned_runs_post(self.id)
+
     # Generic Info     
     def get_id(self, First, Last):
         # uses name of player to get their player id from people.csv
@@ -193,6 +199,59 @@ class Player:
             return self.post_ERA[year]
         else:
             return self.post_ERA
+
+    def get_innings_pitched_post(self, ID):
+        # Get innings pitched in the playoffs
+        with open("FilteredPitchingPost.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == ID:
+                    if row[2] in self.post_pitch_innings:
+                        val = self.post_pitch_innings[row[2]]
+                        new = val + (float(row[13]) / 3.0)
+                        self.post_pitch_innings[row[2]] = new
+                    else:
+                        self.post_pitch_innings[row[2]] = (float(row[13]) / 3.0)
+
+    def return_innings_pitched_post(self, year=""):
+        if year:
+            if len(self.post_pitch_innings) != 0:
+                try:
+                    inn = self.post_pitch_innings[year]
+                    return inn
+                except:
+                    return 0
+            else:
+                return 0
+        else:
+            return self.post_pitch_innings
+
+    def get_earned_runs_post(self, ID):
+        # Get total earned runs allowed in the playoffs
+        with open("FilteredPitchingPost.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == ID:
+                    if row[2] in self.post_earned_runs:
+                        value = float(self.post_earned_runs[row[2]])
+                        newer = value + float(row[15])
+                        self.post_earned_runs[row[2]] = newer
+                    else:
+                        self.post_earned_runs[row[2]] = row[15]
+
+    def return_earned_runs_post(self, year=""):
+        if year:
+            if len(self.post_earned_runs) != 0:
+                try:
+                    inn = self.post_earned_runs[year]
+                    # print(self.name, self.post_earned_runs)
+                    return inn
+                except:
+                    return 0
+            else:
+                return 0
+        else:
+            return self.post_earned_runs
 
     def get_pitch_hr(self, ID):
         # uses player ID to get the amount of hrs they pitched
