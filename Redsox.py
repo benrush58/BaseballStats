@@ -20,14 +20,14 @@ def get_team_stats(teams):
     years = {}
 
     for team in teams:
-        #reg_batavg = team.reg_ba()
-        #post_batavg = team.post_ba()
-        #reg_era = team.reg_era()
-        #post_era = team.post_era()
-        #reg_hra = team.reg_hra()
-        #post_hra= team.post_hra()
-        #pitch_reg_hra = team.pitch_reg_hra()
-        #pitch_post_hra = team.pitch_post_hra()
+        # reg_batavg = team.reg_ba()
+        # post_batavg = team.post_ba()
+        # reg_era = team.reg_era()
+        # post_era = team.post_era()
+        # reg_hra = team.reg_hra()
+        # post_hra= team.post_hra()
+        # pitch_reg_hra = team.pitch_reg_hra()
+        # pitch_post_hra = team.pitch_post_hra()
 
         years[team.year] = {"reg_batavg": team.reg_ba(), "post_batavg": team.post_ba(), "reg_era": team.reg_era(),
                             "post_era": team.post_era(), "reg_hra": team.reg_hra(), "post_hra": team.post_hra(),
@@ -35,6 +35,38 @@ def get_team_stats(teams):
     return years
 
 
+def replace_na(los):
+    ret = []
+    for x in los:
+        if type(x) == str:
+            if x[0] == "N":
+                ret.append(0)
+            else:
+                ret.append(int(x))
+        else:
+            ret.append(x)
+    return ret
+
+
+def graph_regular_vs_post(regular, post, title, y):
+    x_labels = ["2015", "2016", "2017", "2018", '2019']
+
+    # Charts to make: one chart for each of the 4 stats comparing playoff to regular season performance
+    post = replace_na(post)
+    print("POST")
+    print(post)
+
+    width = 0.35
+    bar1 = np.arange(len(x_labels))
+    bar2 = [i + width for i in bar1]
+
+    plt.bar(bar1, regular, 0.35, label="Regular Season")
+    plt.bar(bar2, post, 0.35, label="Post Season")
+    plt.xlabel("Year")
+    plt.ylabel(y)
+    plt.title(title)
+    plt.xticks(bar1 + (width / 2), x_labels)
+    plt.legend()
 
 
 def main():
@@ -56,7 +88,23 @@ def main():
     # Start using graphs to represent this data
     x_labels = ["2015", "2016", "2017", "2018", '2019']
 
-    x_labels_2 = ["Batting avergae", "ERA", "Home Runs Average", "Pitching HR allowed"]
+    # Charts to make: one chart for each of the 4 stats comparing playoff to regular season performance
+    print(stats["2015"]["reg_era"])
+    y_label_ba_regular = [stats["2015"]["reg_batavg"], stats["2016"]["reg_batavg"], stats["2017"]["reg_batavg"],
+                          stats["2018"]["reg_batavg"], stats["2019"]["reg_batavg"]]
+    y_label_ba_post = [stats["2015"]["post_batavg"], stats["2016"]["post_batavg"], stats["2017"]["post_batavg"],
+                       stats["2018"]["post_batavg"], stats["2019"]["post_batavg"]]
+    # graph_regular_vs_post(y_label_ba_regular, y_label_ba_post, "Batting Average per Season", "Batting Average")
+    # plt.show()
+
+    y_label_era_regular = [stats["2015"]["reg_era"], stats["2016"]["reg_era"], stats["2017"]["reg_era"],
+                           stats["2018"]["reg_era"], stats["2019"]["reg_era"]]
+    y_label_era_post = [stats["2015"]["post_era"], stats["2016"]["post_era"], stats["2017"]["post_era"],
+                        stats["2018"]["post_era"], stats["2019"]["post_era"]]
+    print(y_label_era_regular)
+    print(y_label_era_post)
+    graph_regular_vs_post(y_label_era_regular, y_label_era_post, "ERA per Season", "ERA")
+    plt.show()
 
 
 if __name__ == '__main__':
