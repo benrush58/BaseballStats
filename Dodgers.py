@@ -189,6 +189,7 @@ if __name__ == "__main__":
     dodgers_post_scaled = normalize(dodgers_post)
 
     # again trying to predict post season success based off the 4 stats (numbers chosen based off visualization)
+    #WHERE DID THE NUMBERS COME FROM? CURIOUS AS TO METHODS?
     dodgers_post_scaled['Pred_Round'] = dodgers_post_scaled['Post_BA'] * 0.15 + dodgers_post_scaled['Post_HR_avg'] * 0.1 + \
                                      dodgers_post_scaled['Post_ERA'] * 0.7 + dodgers_post_scaled['Post_HRA_avg'] * 0.1
 
@@ -203,6 +204,7 @@ if __name__ == "__main__":
     print(dodgers_overall)
 
     plot_summary(dodgers_overall)
+
 
 
 
