@@ -10,28 +10,30 @@ Created on Sun Nov 14 15:51:29 2021
 dodgers file
 """
 
+
 from TeamClass import Team
-from PlayerClass import Player
 import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
+
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
 
 
 def plot_stats(team_df):
+    """ Plots the 4 stats we are using on 4 different scatterplots with
+    regular season and post season differentiated by color """
     for i in range(0, len(team_df.columns), 2):
-        df = team_df.iloc[:, [i, i+1]]
+        df = team_df.iloc[:, [i, i + 1]]
         sns.scatterplot(data=df)
         plt.show()
-        
-def plot_dict(data):
 
-    for key in data.keys():
-        data = data[key]
-        sns.scatterplot(data)
-        plt.show()
-        
+
 def calculate_team_stats(teams):
+    """ Calculates the stats we are using for regular season and post season.
+    Returns a dictionary with name of the stats as keys and the stat value as values """
     teams_stats = {}
 
     for team in teams:
@@ -50,6 +52,22 @@ def calculate_team_stats(teams):
     return teams_stats
 
 
+def plot_summary(stats_df):
+    """ Scatterplot of the summary statistics for the team across different years """
+    sns.lineplot(data=stats_df)
+    plt.show()
+
+
+def normalize(df):
+    """ Scales all of the columns in the dataframe to values between 0 and 1 """
+    index = df.index
+    cols = df.columns
+    scaler = MinMaxScaler()
+    df = scaler.fit_transform(df.to_numpy())
+    df = pd.DataFrame(df, index=index, columns=cols)
+    return df
+
+
 
 if __name__ == "__main__":
     dodgers15 = Team('LAN', '2015')
@@ -66,6 +84,7 @@ if __name__ == "__main__":
     2017: 104-58, 0.642, lost in world series to Astros
     2018: 92-71, 0.564, lost in world series to Red Sox
     2019: 106-56, 0.654, lost in NL series to Nationals
+    """
     """
     win_percent = []
     ranks = []
@@ -108,7 +127,8 @@ if __name__ == "__main__":
    # stats = calculate_team_stats(teams)
     #print(stats)
     
-    
+    """
+    """
     teams_stats = calculate_team_stats(teams)
     dodgers = pd.DataFrame(teams_stats)
     dodgers.replace(0.0, np.NaN, inplace=True)
@@ -118,9 +138,71 @@ if __name__ == "__main__":
     
     dodgers = pd.read_csv('Dodgers.csv', index_col=0)
     dodgers = dodgers.swapaxes('index', 'columns')
+
     
     dodgers['Reg_Rank'] = [5, 8, 2, 2, 1]
     dodgers['Post_Round'] = [2, np.NaN, 5, 3, 4]
+    """
+    #code below is adapted from Astros 
 
+    # reading from csv to make the process faster
+    dodgers = pd.read_csv('Dodgers.csv', index_col=0)
+    dodgers = dodgers.swapaxes('index', 'columns')
+
+    print(dodgers)
+
+    # plotting the 4 stats
     plot_stats(dodgers)
+
+    # creating new dataframes based on pitching vs batting stats (regular season)
+    dodgers_reg_pitch = dodgers[['Reg_ERA', 'Reg_HRA_avg']]
+    dodgers_reg_bat = dodgers[['Reg_BA', 'Reg_HR_avg']]
+
+    # taking inverse of pitching stats to help with normalization
+    dodgers_reg_pitch = dodgers_reg_pitch.apply(lambda x: 1 / x)
+
+    # recombining the dataframes and adding inverse rank based on winning percentage/standings
+    dodgers_reg = pd.concat([dodgers_reg_bat, dodgers_reg_pitch], axis=1)
+    dodgers_reg['Reg_Rank'] = [0.2, 0.125, 0.5, 0.5, 1]
+
+    # normalizing all of the values
+    dodgers_reg_scaled = normalize(dodgers_reg)
+
+    # predicting the standing of the team based on the 4 stats (numbers chosen based on the visualization)
+    dodgers_reg_scaled['Pred_Rank'] = dodgers_reg_scaled['Reg_BA'] * 0.15 + dodgers_reg_scaled['Reg_HR_avg'] * 0.6 + \
+                                    dodgers_reg_scaled['Reg_ERA'] * 0.15 + dodgers_reg_scaled['Reg_HRA_avg'] * 0.1
+
+    print(dodgers_reg_scaled)
+
+    # plotting all of the normalized stats with the actual and predicted rank
+    plot_summary(dodgers_reg_scaled)
+
+    # same process for the post season
+    dodgers_post_pitch = dodgers[['Post_ERA', 'Post_HRA_avg']]
+    dodgers_post_bat = dodgers[['Post_BA', 'Post_HR_avg']]
+    dodgers_post_pitch = dodgers_post_pitch.apply(lambda x: 1 / x)
+    dodgers_post = pd.concat([dodgers_post_bat, dodgers_post_pitch], axis=1)
+
+    # instead of rank, I used round to represent the round they lost in the playoffs (or 5 if they won world series)
+    dodgers_post['Post_Round'] = [2, np.NaN, 5, 3, 4]
+
+    dodgers_post_scaled = normalize(dodgers_post)
+
+    # again trying to predict post season success based off the 4 stats (numbers chosen based off visualization)
+    dodgers_post_scaled['Pred_Round'] = dodgers_post_scaled['Post_BA'] * 0.15 + dodgers_post_scaled['Post_HR_avg'] * 0.1 + \
+                                     dodgers_post_scaled['Post_ERA'] * 0.7 + dodgers_post_scaled['Post_HRA_avg'] * 0.1
+
+    print(dodgers_post_scaled)
+
+    plot_summary(dodgers_post_scaled)
+
+    # one final comparison of the actual and predicted ranks and rounds for each season
+    # (is there any correlation between the stats and actually winning?)
+    dodgers_overall = pd.concat([dodgers_reg_scaled[['Reg_Rank', 'Pred_Rank']], dodgers_post_scaled[['Post_Round', 'Pred_Round']]], axis=1)
+
+    print(dodgers_overall)
+
+    plot_summary(dodgers_overall)
+
+
 
