@@ -150,6 +150,59 @@ def main():
     over = over.swapaxes('index', 'columns')
     plot_stats(over)
 
+
+
+    # creating new dataframes based on pitching vs batting stats (regular season)
+    sox_reg_pitch = redsox[['Reg_ERA', 'Reg_HRA_avg']]
+    sox_reg_bat = redsox[['Reg_BA', 'Reg_HR_avg']]
+
+    # taking inverse of pitching stats to help with normalization
+    sox_reg_pitch = sox_reg_pitch.apply(lambda x: 1 / x)
+
+    # recombining the dataframes and adding inverse rank based on winning percentage/standings
+    sox_reg = pd.concat([sox_reg_bat, sox_reg_pitch], axis=1)
+    sox_reg['Reg_Rank'] = [0.2, 0.125, 0.5, 0.5, 1]
+
+    # normalizing all of the values
+    sox_reg_scaled = normalize(sox_reg)
+
+    # predicting the standing of the team based on the 4 stats (numbers chosen based on the visualization)
+    sox_reg_scaled['Pred_Rank'] = sox_reg_scaled['Reg_BA'] * 0.15 + sox_reg_scaled['Reg_HR_avg'] * 0.6 + \
+                                    sox_reg_scaled['Reg_ERA'] * 0.15 + sox_reg_scaled['Reg_HRA_avg'] * 0.1
+
+    print(sox_reg_scaled)
+
+    # plotting all of the normalized stats with the actual and predicted rank
+    plot_summary(sox_reg_scaled)
+
+    # same process for the post season
+    sox_post_pitch = redsox[['Post_ERA', 'Post_HRA_avg']]
+    sox_post_bat = redsox[['Post_BA', 'Post_HR_avg']]
+    sox_post_pitch = sox_post_pitch.apply(lambda x: 1 / x)
+    sox_post = pd.concat([sox_post_bat, sox_post_pitch], axis=1)
+
+    # instead of rank, I used round to represent the round they lost in the playoffs (or 5 if they won world series)
+    sox_post['Post_Round'] = [2, np.NaN, 5, 3, 4]
+
+    sox_post_scaled = normalize(sox_post)
+
+    # again trying to predict post season success based off the 4 stats (numbers chosen based off visualization)
+    sox_post_scaled['Pred_Round'] = sox_post_scaled['Post_BA'] * 0.15 + sox_post_scaled['Post_HR_avg'] * 0.1 + \
+                                     sox_post_scaled['Post_ERA'] * 0.7 + sox_post_scaled['Post_HRA_avg'] * 0.1
+
+    print(sox_post_scaled)
+
+    plot_summary(sox_post_scaled)
+
+    # one final comparison of the actual and predicted ranks and rounds for each season
+    # (is there any correlation between the stats and actually winning?)
+    sox_overall = pd.concat([sox_reg_scaled[['Reg_Rank', 'Pred_Rank']], sox_post_scaled[['Post_Round', 'Pred_Round']]], axis=1)
+
+    print(sox_overall)
+
+    plot_summary(sox_overall)
+
+"""
     # Start using graphs to represent this data
     x_labels = ["2015", "2016", "2017", "2018", '2019']
 
@@ -180,6 +233,7 @@ def main():
                               stats["2017"]["pitch_post_hra"], stats["2018"]["pitch_post_hra"],
                               stats["2019"]["pitch_post_hra"]]
     graph_regular_vs_post(y_label_pitch_hra_regular, y_label_pitch_hra_post, "Home Run Average", "HRA")
+    """
 
 
 if __name__ == '__main__':
