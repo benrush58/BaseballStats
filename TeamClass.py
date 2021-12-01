@@ -95,9 +95,10 @@ class Team:
             return hits / pa
         else:
             return 'No player BAs found'
-
+    """
     def post_ba(self):
-        """ Returns post season team BA """
+        """# Returns post season team BA
+    """
         ba_sum = 0
         num_ba = 0
         for player in list(self.players.values()):
@@ -107,6 +108,20 @@ class Team:
                 ba_sum += float(ba[self.year])
         if num_ba != 0:
             return ba_sum / num_ba
+        else:
+            return 'No player BAs found'
+    """
+
+    def post_ba(self):
+        hits = 0
+        pa = 0
+        for player in list(self.players.values()):
+            h = player.return_hits_post(self.year)
+            plate = player.return_plate_appearances_post(self.year)
+            hits = hits + h
+            pa = pa + plate
+        if pa != 0:
+            return hits / pa
         else:
             return 'No player BAs found'
 
