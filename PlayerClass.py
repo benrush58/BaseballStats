@@ -54,6 +54,18 @@ class Player:
         self.post_earned_runs = {}
         self.get_earned_runs_post(self.id)
 
+        self.plate_appearances = {}
+        self.get_plate_appearances(self.id)
+
+        self.hits = {}
+        self.get_hits(self.id)
+
+        self.plate_appearances_post = {}
+        self.get_plate_appearances_post(self.id)
+
+        self.hits_post = {}
+        self.get_hits_post(self.id)
+
     # Generic Info     
     def get_id(self, First, Last):
         # uses name of player to get their player id from people.csv
@@ -101,6 +113,58 @@ class Player:
         else:
             return self.bat_avg
 
+    def get_plate_appearances(self, ID):
+        with open("FilteredBatting.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == ID and int(row[7]) != 0:  # get row with player's id
+                    avg = int(row[9]) / int(row[7])  # make sure they bat <1
+                    if row[2] in self.plate_appearances:
+                        value = int(self.plate_appearances[row[2]])
+                        newer = value + int(row[7])
+                        self.plate_appearances[row[2]] = newer
+                    else:
+                        self.plate_appearances[row[2]] = int(row[7])
+
+    def return_plate_appearances(self, year=""):
+        if year:
+            if len(self.plate_appearances) != 0:
+                try:
+                    pa = self.plate_appearances[year]
+                    return pa
+                except:
+                    return 0
+            else:
+                return 0
+        else:
+            return self.plate_appearances
+
+    def get_hits(self, ID):
+        with open("FilteredBatting.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == ID and int(row[7]) != 0:  # get row with player's id
+                    avg = int(row[9]) / int(row[7])  # make sure they bat <1
+                    if row[2] in self.hits:
+                        value = int(self.hits[row[2]])
+                        newer = value + int(row[9])
+                        self.hits[row[2]] = newer
+                    else:
+                        self.hits[row[2]] = int(row[9])
+
+    def return_hits(self, year=""):
+        if year:
+            if len(self.hits) != 0:
+                try:
+                    hit = self.hits[year]
+                    return hit
+                except:
+                    return 0
+            else:
+                return 0
+        else:
+            return self.hits
+
     def get_post_bat_avg(self, ID):
         # uses player id to get at bats and hits for player, then divides
         # them to find batting average, appends that value to bat_avg w/ year
@@ -122,6 +186,58 @@ class Player:
             return self.post_bat_avg[year]
         else:
             return self.post_bat_avg
+
+    def get_plate_appearances_post(self, ID):
+        with open("FilteredBattingPost.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[3] == ID and int(row[7]) != 0:  # get row with player's id
+                    avg = int(row[9]) / int(row[7])  # make sure they bat <1
+                    if row[1] in self.plate_appearances_post:
+                        value = int(self.plate_appearances_post[row[1]])
+                        newer = value + int(row[7])
+                        self.plate_appearances_post[row[1]] = newer
+                    else:
+                        self.plate_appearances_post[row[1]] = int(row[7])
+
+    def return_plate_appearances_post(self, year=""):
+        if year:
+            if len(self.plate_appearances_post) != 0:
+                try:
+                    pa = self.plate_appearances_post[year]
+                    return pa
+                except:
+                    return 0
+            else:
+                return 0
+        else:
+            return self.plate_appearances_post
+
+    def get_hits_post(self, ID):
+        with open("FilteredBattingPost.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[3] == ID and int(row[7]) != 0:  # get row with player's id
+                    # avg = int(row[9]) / int(row[7])  # make sure they bat <1
+                    if row[1] in self.hits_post:
+                        value = int(self.hits_post[row[1]])
+                        newer = value + int(row[9])
+                        self.hits_post[row[1]] = newer
+                    else:
+                        self.hits_post[row[1]] = int(row[9])
+
+    def return_hits_post(self, year=""):
+        if year:
+            if len(self.hits_post) != 0:
+                try:
+                    hit = self.hits_post[year]
+                    return hit
+                except:
+                    return 0
+            else:
+                return 0
+        else:
+            return self.hits_post
 
     def get_bat_hr(self, ID):
         # uses player id to get batter's hr number
