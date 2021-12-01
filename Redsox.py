@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
 
 """Goals of this research
 1) Identify how each team was projected to do in the post season given their regular season record
@@ -11,7 +12,45 @@ import matplotlib.pyplot as plt
 3) Compare stats and players between regular season and post season with all types of graphs
 4) Identify which stats and players were the most influential in their regular vs post season performance
 
-Could be interesting to tell the story of the slow rise and the dramatic fall of the Sox in these 5 years"""
+Could be interesting to tell the story of the slow rise and the dramatic fall of the Sox in these 5 years
+
+REFORMATING CODE:
+"""
+
+"""
+Overperformed: 2015 Astros, 2016 Dodgers, 2017 Yankees, 2017 Astros, 2018 Dodgers
+
+Underperformed: 2015 Yankees, 2015 Dodgers, 2017 Dodgers, 2019 Astros, 2019 Dodgers
+
+Correctly performed: 2016 Red Sox, 2017 Red Sox, 2018 Red Sox, 2018 Yankees, 2018 Astros, 2019 Yankees
+
+Didn't make playoffs: 2015 Red Sox, 2016 Yankees, 2016 Astros, 2019 Red Sox
+"""
+
+def plot_stats(team_df):
+    """ Plots the 4 stats we are using on 4 different scatterplots with
+    regular season and post season differentiated by color """
+    for i in range(0, len(team_df.columns), 2):
+        df = team_df.iloc[:, [i, i + 1]]
+        sns.scatterplot(data=df)
+        plt.show()
+
+
+def plot_summary(stats_df):
+    """ Scatterplot of the summary statistics for the team across different years """
+    sns.lineplot(data=stats_df)
+    plt.show()
+
+
+def normalize(df):
+    """ Scales all of the columns in the dataframe to values between 0 and 1 """
+    index = df.index
+    cols = df.columns
+    scaler = MinMaxScaler()
+    df = scaler.fit_transform(df.to_numpy())
+    df = pd.DataFrame(df, index=index, columns=cols)
+    return df
+
 
 
 def get_team_stats(teams):
@@ -82,8 +121,17 @@ def main():
     # Not close to playoffs, could be interesting to examine the fall off
     redsox19 = Team('BOS', "2019")
 
+
+    # Teams that  overperformed
+    astros15 = Team('HOU', 2015)
+    dodgers16 = Team('LAN', 2016)
+    yankees17 = Team('NYY', 2017)
+    astros17 = Team('HOU', 2017)
+    dodgers19 = Team('LAN', 2018)
+
     teams = [redsox15, redsox16, redsox17, redsox18, redsox19]
     stats = get_team_stats(teams)
+    print(stats)
     #print(redsox15.trying_era())
     #print(redsox16.trying_era())
     #print(redsox17.trying_era())
