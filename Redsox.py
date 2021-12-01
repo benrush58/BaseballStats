@@ -134,6 +134,19 @@ def main():
     astros17 = Team('HOU', '2017')
     dodgers18 = Team('LAN', '2018')
 
+    # Teams that underperformed
+    yanks15 = Team('NYA', '2015')
+    dodgers15 = Team('LAN', '2015')
+    dodgers17 = Team('LAN', '2017')
+    astros19 = Team('HOU', '2019')
+    dodgers19 = Team('LAN', '2019')
+
+    # Teams that performed correctly
+    yanks18 = Team('NYA', '2018')
+    astros18 = Team('HOU', '2018')
+    yanks19 = Team('NYA', '2019')
+
+
     teams = [redsox15, redsox16, redsox17, redsox18, redsox19]
     stats = get_team_stats(teams)
     print(stats)
@@ -145,14 +158,30 @@ def main():
 
     redsox = pd.read_csv('redsox.csv', index_col=0)
     redsox = redsox.swapaxes('index', 'columns')
+    #plot_stats(redsox)
 
-    plot_stats(redsox)
     over_teams = [astros15, dodgers16, yanks17, astros17, dodgers18]
     over_stats = get_team_stats(over_teams)
     print(over_stats)
     over = pd.read_csv("Overs.csv", index_col=0)
     over = over.swapaxes('index', 'columns')
-    plot_stats(over)
+    #plot_stats(over)
+
+    under_teams = [yanks15, dodgers15, dodgers17, astros19, dodgers19]
+    under_stats = get_team_stats(under_teams)
+    print(under_stats)
+    under = pd.read_csv("Unders.csv", index_col=0)
+    under = under.swapaxes('index', 'columns')
+    #plot_stats(under)
+
+    correct_teams = [redsox16, redsox17, redsox18, yanks18, astros18, yanks19]
+    correct_stats = get_team_stats(correct_teams)
+    print(correct_stats)
+    correct = pd.read_csv("Correct.csv", index_col=0)
+    correct = correct.swapaxes('index', 'columns')
+    plot_stats(correct)
+
+
 
 
 
