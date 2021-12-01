@@ -66,9 +66,10 @@ class Team:
     def return_rank(self):
         # returns team's rank at end of season
         return self.rank
-
+    """
     def reg_ba(self):
-        """ Returns regular season team BA """
+        """ # Returns regular season team BA
+    """
         ba_sum = 0
         num_ba = 0
         for player in list(self.players.values()):
@@ -78,6 +79,20 @@ class Team:
                 ba_sum += float(ba[self.year])
         if num_ba != 0:
             return ba_sum / num_ba
+        else:
+            return 'No player BAs found'
+    """
+
+    def reg_ba(self):
+        hits = 0
+        pa = 0
+        for player in list(self.players.values()):
+            h = player.return_hits(self.year)
+            plate = player.return_plate_appearances(self.year)
+            hits = hits + h
+            pa = pa + plate
+        if pa != 0:
+            return hits / pa
         else:
             return 'No player BAs found'
 

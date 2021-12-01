@@ -121,6 +121,11 @@ def main():
     # Not close to playoffs, could be interesting to examine the fall off
     redsox19 = Team('BOS', "2019")
 
+    player = Player(First = "Mookie", Last = 'Betts')
+    print(player.hits)
+    # print(redsox17.reg_ba_2())
+    print(redsox17.reg_ba())
+
 
     # Teams that  overperformed
     astros15 = Team('HOU', '2015')
@@ -132,7 +137,7 @@ def main():
 
     teams = [redsox15, redsox16, redsox17, redsox18, redsox19]
     stats = get_team_stats(teams)
-    # print(stats)
+    print(stats)
     #print(redsox15.trying_era())
     #print(redsox16.trying_era())
     #print(redsox17.trying_era())
