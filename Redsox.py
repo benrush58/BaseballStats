@@ -138,6 +138,11 @@ def main():
     #print(redsox18.trying_era())
     #print(redsox19.trying_era())
 
+    redsox = pd.read_csv('redsox.csv', index_col=0)
+    redsox = redsox.swapaxes('index', 'columns')
+
+    plot_stats(redsox)
+
     # Start using graphs to represent this data
     x_labels = ["2015", "2016", "2017", "2018", '2019']
 
