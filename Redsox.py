@@ -68,7 +68,7 @@ def get_team_stats(teams):
         # pitch_reg_hra = team.pitch_reg_hra()
         # pitch_post_hra = team.pitch_post_hra()
 
-        years[team.year] = {"reg_batavg": team.reg_ba(), "post_batavg": team.post_ba(), "reg_era": team.reg_era(),
+        years[team.id + team.year] = {"reg_batavg": team.reg_ba(), "post_batavg": team.post_ba(), "reg_era": team.reg_era(),
                             "post_era": team.post_era(), "reg_hra": team.reg_hra(), "post_hra": team.post_hra(),
                             "pitch_reg_hra": team.pitch_reg_hra(), "pitch_post_hra": team.pitch_post_hra()}
     return years
@@ -123,15 +123,16 @@ def main():
 
 
     # Teams that  overperformed
-    astros15 = Team('HOU', 2015)
-    dodgers16 = Team('LAN', 2016)
-    yankees17 = Team('NYY', 2017)
-    astros17 = Team('HOU', 2017)
-    dodgers19 = Team('LAN', 2018)
+    astros15 = Team('HOU', '2015')
+    dodgers16 = Team('LAN', '2016')
+    yanks17 = Team('NYA', '2017')
+    astros17 = Team('HOU', '2017')
+    dodgers18 = Team('LAN', '2018')
+    print(yanks17.players)
 
     teams = [redsox15, redsox16, redsox17, redsox18, redsox19]
     stats = get_team_stats(teams)
-    print(stats)
+    # print(stats)
     #print(redsox15.trying_era())
     #print(redsox16.trying_era())
     #print(redsox17.trying_era())
@@ -142,6 +143,12 @@ def main():
     redsox = redsox.swapaxes('index', 'columns')
 
     plot_stats(redsox)
+    over_teams = [astros15, dodgers16, yanks17, astros17, dodgers18]
+    over_stats = get_team_stats(over_teams)
+    print(over_stats)
+    over = pd.read_csv("Overs.csv", index_col=0)
+    over = over.swapaxes('index', 'columns')
+    plot_stats(over)
 
     # Start using graphs to represent this data
     x_labels = ["2015", "2016", "2017", "2018", '2019']
