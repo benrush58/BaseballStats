@@ -42,6 +42,7 @@ def calculate_team_stats(teams):
 def plot_summary(stats_df):
     """ Scatterplot of the summary statistics for the team across different years """
     sns.scatterplot(data=stats_df)
+    plt.legend(bbox_to_anchor=(.15, 1), loc='upper left', borderaxespad=0)
     plt.show()
 
 
