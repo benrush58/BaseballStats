@@ -67,7 +67,7 @@ def main():
     print(over_stats)
     over = pd.read_csv("Overs.csv", index_col=0)
     over = over.swapaxes('index', 'columns')
-    #plot_stats(over)
+    plot_stats(over)
 
     # creating new dataframes based on pitching vs batting stats (regular season)
     over_reg_pitch = over[['Reg_ERA', 'Reg_HRA_avg']]
