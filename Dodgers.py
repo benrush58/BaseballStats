@@ -163,14 +163,22 @@ if __name__ == "__main__":
 
     # recombining the dataframes and adding inverse rank based on winning percentage/standings
     dodgers_reg = pd.concat([dodgers_reg_bat, dodgers_reg_pitch], axis=1)
-    dodgers_reg['Reg_Rank'] = [0.2, 0.125, 0.5, 0.5, 1]
+    #UPDATE NUMBERS, overall finish in MLB
+    #2015 6th 
+    #2016 6th
+    #2017 1st
+    #2018 7th
+    #2019 2nd
+    dodgers_reg['Reg_Rank'] = [0.166, 0.166, 1, 0.142, 0.5]
+    #dodgers_reg['Reg_Rank'] = [0.2, 0.125, 0.5, 0.5, 1]
 
     # normalizing all of the values
     dodgers_reg_scaled = normalize(dodgers_reg)
 
     # predicting the standing of the team based on the 4 stats (numbers chosen based on the visualization)
-    dodgers_reg_scaled['Pred_Rank'] = dodgers_reg_scaled['Reg_BA'] * 0.15 + dodgers_reg_scaled['Reg_HR_avg'] * 0.6 + \
-                                    dodgers_reg_scaled['Reg_ERA'] * 0.15 + dodgers_reg_scaled['Reg_HRA_avg'] * 0.1
+    #TEXT PAXTON TO FIGURE OUT HOW TO FIX THIS
+    dodgers_reg_scaled['Pred_Rank'] = dodgers_reg_scaled['Reg_BA'] * 0.1 + dodgers_reg_scaled['Reg_HR_avg'] * 0.4 + \
+                                    dodgers_reg_scaled['Reg_ERA'] * 0.4 + dodgers_reg_scaled['Reg_HRA_avg'] * 0.1
 
     print(dodgers_reg_scaled)
 
@@ -190,8 +198,8 @@ if __name__ == "__main__":
 
     # again trying to predict post season success based off the 4 stats (numbers chosen based off visualization)
     #WHERE DID THE NUMBERS COME FROM? CURIOUS AS TO METHODS?
-    dodgers_post_scaled['Pred_Round'] = dodgers_post_scaled['Post_BA'] * 0.15 + dodgers_post_scaled['Post_HR_avg'] * 0.1 + \
-                                     dodgers_post_scaled['Post_ERA'] * 0.7 + dodgers_post_scaled['Post_HRA_avg'] * 0.1
+    dodgers_post_scaled['Pred_Round'] = dodgers_post_scaled['Post_BA'] * 0.1 + dodgers_post_scaled['Post_HR_avg'] * 0.4 + \
+                                     dodgers_post_scaled['Post_ERA'] * 0.4 + dodgers_post_scaled['Post_HRA_avg'] * 0.1
 
     print(dodgers_post_scaled)
 
@@ -206,5 +214,8 @@ if __name__ == "__main__":
     plot_summary(dodgers_overall)
 
 
+
+#under perfromed 15, 17, 19
+#over performed 16 and 18
 
 
