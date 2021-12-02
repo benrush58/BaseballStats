@@ -67,7 +67,7 @@ def main():
     print(under_stats)
     under = pd.read_csv("Unders.csv", index_col=0)
     under = under.swapaxes('index', 'columns')
-    #plot_stats(under)
+    plot_stats(under)
 
     # creating new dataframes based on pitching vs batting stats (regular season)
     under_reg_pitch = under[['Reg_ERA', 'Reg_HRA_avg']]
