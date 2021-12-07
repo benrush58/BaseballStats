@@ -122,5 +122,14 @@ def main():
     plot_summary(correct_correctall)
 
 
+    """
+    Batting average did what was expected: 
+    - overperform: 1
+    - underperform: 5
+    ERA did what was expected:
+    - overperform: 1
+    - underperform: 3
+    """
+
 if __name__ == '__main__':
     main()

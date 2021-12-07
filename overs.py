@@ -63,10 +63,13 @@ def main():
     dodgers18 = Team('LAN', '2018')
     over_teams = [astros15, dodgers16, yanks17, astros17, dodgers18]
 
+    print(dodgers18.year)
+
     over_stats = get_team_stats(over_teams)
     print(over_stats)
     over = pd.read_csv("Overs.csv", index_col=0)
     over = over.swapaxes('index', 'columns')
+    print(over)
     plot_stats(over)
 
     # creating new dataframes based on pitching vs batting stats (regular season)
