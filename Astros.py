@@ -21,33 +21,6 @@ def plot_stats(team_df):
         sns.scatterplot(data=df)
         plt.show()
 
-
-def calculate_team_stats(teams):
-    """
-    name: calculate_team_stats
-    parameters: teams, a list of the years of teams
-    returns: a nested dictionary with relevent statistics
-    """
-    """ Calculates the stats we are using for regular season and post season.
-    Returns a dictionary with name of the stats as keys and the stat value as values """
-    teams_stats = {}
-
-    for team in teams:
-        reg_ba = team.reg_ba()
-        post_ba = team.post_ba()
-        reg_era = team.reg_era()
-        post_era = team.post_era()
-        reg_hra = team.reg_hra()
-        post_hra = team.post_hra()
-        pitch_reg_hra = team.pitch_reg_hra()
-        pitch_post_hra = team.pitch_post_hra()
-
-        teams_stats[team.year] = {'Reg_BA': reg_ba, 'Post_BA': post_ba, 'Reg_HR_avg': reg_hra, 'Post_HR_avg': post_hra,
-                                  'Reg_ERA': reg_era, 'Post_ERA': post_era, 'Reg_HRA_avg': pitch_reg_hra,
-                                  'Post_HRA_avg': pitch_post_hra}
-    return teams_stats
-
-
 def plot_summary(stats_df):
     """
     name: plot_summary
