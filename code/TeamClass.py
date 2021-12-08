@@ -1,0 +1,208 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Nov  7 22:08:54 2021
+
+@author: angel
+"""
+from PlayerClass import Player
+import csv
+
+
+class Team:
+    # this class takes team id and year and builds a roster full of
+    # player objects of players who were in that team that year
+    # players are in a dict, with key being their id and value their object
+    # also gets some team stats for that year
+
+    def __init__(self, ID, year):
+        self.id = ID
+        self.year = year
+
+        self.players = {}
+        self.get_players()
+
+        self.wins = ""
+        self.get_wins()
+
+        self.rank = ""
+        self.get_rank()
+
+    def get_players(self):
+        # goes through Appearances file, creates player object for any player
+        # that is in the team that year and adds object to players dict
+        with open("FilteredAppearances.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == self.year and row[2] == self.id:
+                    self.players[row[4]] = Player(row[4])
+
+    def size(self):
+        # returns size of team
+        return len(self.players)
+
+    def get_wins(self):
+        # goes through team file, finds amount of wins and losses
+        # for the year, and gets win percentage
+        with open("FilteredTeams.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == self.year and row[3] == self.id:
+                    wins = int(row[9])
+                    losses = int(row[10])
+                    self.wins = wins / (wins + losses)
+
+    def return_wins(self):
+        # returns win percentage
+        return self.wins
+
+    def get_rank(self):
+        # goes through the team file and gets team rank
+        with open("FilteredTeams.csv") as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == self.year and row[3] == self.id:
+                    self.rank = row[6]
+
+    def return_rank(self):
+        # returns team's rank at end of season
+        return self.rank
+    """
+    def reg_ba(self):
+        """ # Returns regular season team BA
+    """
+        ba_sum = 0
+        num_ba = 0
+        for player in list(self.players.values()):
+            ba = player.return_bat_avg()
+            if self.year in ba.keys():
+                num_ba += 1
+                ba_sum += float(ba[self.year])
+        if num_ba != 0:
+            return ba_sum / num_ba
+        else:
+            return 'No player BAs found'
+    """
+
+    def reg_ba(self):
+        hits = 0
+        pa = 0
+        for player in list(self.players.values()):
+            h = player.return_hits(self.year)
+            plate = player.return_plate_appearances(self.year)
+            hits = hits + h
+            pa = pa + plate
+        if pa != 0:
+            return hits / pa
+        else:
+            return 'No player BAs found'
+    """
+    def post_ba(self):
+        """# Returns post season team BA
+    """
+        ba_sum = 0
+        num_ba = 0
+        for player in list(self.players.values()):
+            ba = player.return_post_bat_avg()
+            if self.year in ba.keys():
+                num_ba += 1
+                ba_sum += float(ba[self.year])
+        if num_ba != 0:
+            return ba_sum / num_ba
+        else:
+            return 'No player BAs found'
+    """
+
+    def post_ba(self):
+        hits = 0
+        pa = 0
+        for player in list(self.players.values()):
+            h = player.return_hits_post(self.year)
+            plate = player.return_plate_appearances_post(self.year)
+            hits = hits + h
+            pa = pa + plate
+        if pa != 0:
+            return hits / pa
+        else:
+            return 'No player BAs found'
+
+    def reg_era(self):
+        """ Returns regular season team ERA """
+        with open('FilteredTeams.csv') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == self.year and row[3] == self.id:
+                    return row[29]
+
+
+    def post_era(self):
+        """ Returns post season team ERA """
+        earned_runs = 0
+        innings_pitched = 0
+        for player in list(self.players.values()):
+            er = float(player.return_earned_runs_post(self.year))
+            ip = float(player.return_innings_pitched_post(self.year))
+            earned_runs += er
+            innings_pitched += ip
+        if innings_pitched != 0:
+            # print("Earned runs:", earned_runs)
+            # print("Innings pitched:", innings_pitched)
+            return (9 * earned_runs) / innings_pitched
+        else:
+            return 'No player ERAs found'
+
+    def reg_hra(self):
+        """ Returns regular season team HR average per at bat """
+        with open('FilteredTeams.csv') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == self.year and row[3] == self.id:
+                    return int(row[20]) / int(row[16])
+
+    def post_hra(self):
+        """ Returns post season team HR average per at bat """
+        hra_sum = 0
+        num_rows = 0
+        for id, player in list(self.players.items()):
+            with open('FilteredBattingPost.csv') as file:
+                csv_reader = csv.reader(file)
+                for row in csv_reader:
+                    if row[1] == self.year and row[3] == id and int(row[7]) != 0:
+                        hra_sum += int(row[12]) / int(row[7])
+                        num_rows += 1
+        if num_rows != 0:
+            return hra_sum / num_rows
+        else:
+            return 'No player HRs found'
+
+    def pitch_reg_hra(self):
+        """ Returns regular season team HR allowed average per inning """
+        with open('FilteredTeams.csv') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row[1] == self.year and row[3] == self.id:
+                    return int(row[35]) / (int(row[33]) / 3)
+
+    def pitch_post_hra(self):
+        """ Returns post season team HR allowed average per inning """
+        hra_sum = 0
+        num_rows = 0
+        for id, player in list(self.players.items()):
+            with open('FilteredPitchingPost.csv') as file:
+                csv_reader = csv.reader(file)
+                for row in csv_reader:
+                    if row[2] == self.year and row[1] == id and int(row[13]) != 0:
+                        hra_sum += int(row[16]) / (int(row[13]) / 3)
+                        num_rows += 1
+        if num_rows != 0:
+            return hra_sum / num_rows
+        else:
+            return 'No Pitching HRAs Found'
+
+    def __repr__(self):
+        # when the object is printed, it gives a string of the 
+        # names of all the player objects in team
+        roster = ""
+        for key, value in self.players.items():
+            name = value.return_name()
+            roster += name + ", "
+        return roster
