@@ -68,7 +68,11 @@ class Player:
 
     # Generic Info     
     def get_id(self, First, Last):
-        # uses name of player to get their player id from people.csv
+        """
+        name: get_id
+        paramater: self(a Player)
+        returns: none, gets player's ID
+        """
         with open("People.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -76,6 +80,11 @@ class Player:
                     self.id = row[0]
 
     def get_name(self, ID):
+        """
+        name: get_name
+        paramater: self, a Player
+        returns: none, gets player's name
+        """
         # uses id of player to get their name from people.csv
         with open("People.csv") as file:
             csv_reader = csv.reader(file)
@@ -84,16 +93,29 @@ class Player:
                     self.name = (row[13] + " " + row[14])
 
     def return_id(self):
+        """
+        name: return_id
+        paramater: self, a Player
+        returns: id, player value
+        """
         ID = self.id
         return ID
 
     def return_name(self):
+        """
+        name: return_name
+        paramater: self, a Player
+        returns: name, player name
+        """
         return self.name
 
     # Batting Stats!!!
     def get_bat_avg(self, ID):
-        # uses player id to get at bats and hits for player, then divides
-        # them to find batting average, appends that value to bat_avg w/ year
+        """
+        name: get_bat_avg
+        paramater: self, a Player
+        returns: none, gets player's batting average
+        """
         with open("FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -107,13 +129,22 @@ class Player:
                 self.bat_avg[year] = sum(avg) / len(avg)
 
     def return_bat_avg(self, year=""):
-        # return the batting average, either all years or specified year
+        """
+        name: return_bat_avg
+        paramater: self(a Player) and an optional year
+        returns: player's batting average, player value
+        """
         if year:
             return self.bat_avg[year]
         else:
             return self.bat_avg
 
     def get_plate_appearances(self, ID):
+        """
+        name: get_plate_appearances
+        paramater: self, a Player
+        returns: none, gets player's plate appearances
+        """
         with open("FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -127,6 +158,11 @@ class Player:
                         self.plate_appearances[row[2]] = int(row[7])
 
     def return_plate_appearances(self, year=""):
+        """
+        name: return_plate_appearances
+        paramater: self(a Player) and an optional year
+        returns: player's plate appearances
+        """
         if year:
             if len(self.plate_appearances) != 0:
                 try:
@@ -140,6 +176,11 @@ class Player:
             return self.plate_appearances
 
     def get_hits(self, ID):
+        """
+        name: get_hits
+        paramater: self, a Player
+        returns: none, gets player's hits
+        """
         with open("FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -153,6 +194,11 @@ class Player:
                         self.hits[row[2]] = int(row[9])
 
     def return_hits(self, year=""):
+        """
+        name: return_hits
+        paramater: self(a Player) and an optional year
+        returns: player's hits
+        """
         if year:
             if len(self.hits) != 0:
                 try:
@@ -166,8 +212,11 @@ class Player:
             return self.hits
 
     def get_post_bat_avg(self, ID):
-        # uses player id to get at bats and hits for player, then divides
-        # them to find batting average, appends that value to bat_avg w/ year
+        """
+        name: get_post_bat_avg
+        paramater: self, a Player
+        returns: none, gets player's post season batting average
+        """
         with open("FilteredBattingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -181,6 +230,11 @@ class Player:
                 self.post_bat_avg[year] = sum(avg) / len(avg)
 
     def return_post_bat_avg(self, year=""):
+        """
+        name: return_post_bat_avg
+        paramater: self(a Player) and an optional year
+        returns: player's post season batting average
+        """
         # return the post batting average, either all years or specified year
         if year:
             return self.post_bat_avg[year]
@@ -188,6 +242,11 @@ class Player:
             return self.post_bat_avg
 
     def get_plate_appearances_post(self, ID):
+        """
+        name: get_plate_appearances_post
+        paramater: self, a Player
+        returns: none, gets player's post season plate appearances
+        """
         with open("FilteredBattingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -201,6 +260,11 @@ class Player:
                         self.plate_appearances_post[row[1]] = int(row[7])
 
     def return_plate_appearances_post(self, year=""):
+        """
+        name: return_plate_appearances_post
+        paramater: self(a Player) and an optional year
+        returns: player's post season plate appearances
+        """
         if year:
             if len(self.plate_appearances_post) != 0:
                 try:
@@ -214,6 +278,11 @@ class Player:
             return self.plate_appearances_post
 
     def get_hits_post(self, ID):
+        """
+         name: get_hits_post
+         paramater: self, a Player
+         returns: none, gets player's post season hits
+         """
         with open("FilteredBattingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -227,6 +296,11 @@ class Player:
                         self.hits_post[row[1]] = int(row[9])
 
     def return_hits_post(self, year=""):
+        """
+        name: return_hits_post
+        paramater: self(a Player) and an optional year
+        returns: player's post season hits
+        """
         if year:
             if len(self.hits_post) != 0:
                 try:
@@ -240,7 +314,11 @@ class Player:
             return self.hits_post
 
     def get_bat_hr(self, ID):
-        # uses player id to get batter's hr number
+        """
+         name: get_bat_hr
+         paramater: self, a Player
+         returns: none, gets player's home run total
+         """
         with open("FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -251,14 +329,22 @@ class Player:
                         self.bat_hr[row[2]] = float(row[12])
 
     def return_bat_hr(self, year=""):
-        # return the batter's hrs, either all years or specified year
+        """
+        name: return_bat_hr
+        paramater: self(a Player) and an optional year
+        returns: player's home run total
+        """
         if year:
             return self.bat_hr[year]
         else:
             return self.bat_hr
 
     def get_post_bat_hr(self, ID):
-        # uses player id to get batter's post hr number
+        """
+         name: get_post_bat_hr
+         paramater: self, a Player
+         returns: none, gets player's post season home run total
+         """
         with open("FilteredBattingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -269,7 +355,11 @@ class Player:
                         self.post_bat_hr[row[1]] = float(row[12])
 
     def return_post_bat_hr(self, year=""):
-        # return the batter's hrs post season, either all years or specified year
+        """
+        name: return_post_bat_hr
+        paramater: self(a Player) and an optional year
+        returns: player's post season home run total
+        """
         if year:
             return self.post_bat_hr[year]
         else:
@@ -277,7 +367,11 @@ class Player:
 
     # Pitching stats!!!
     def get_ERA(self, ID):
-        # uses player ID to get their ERA
+        """
+         name: get_ERA
+         paramater: self, a Player
+         returns: none, gets player's post season plate appearances
+         """
         with open("FilteredPitching.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -290,6 +384,11 @@ class Player:
                 self.ERA[year] = sum(era) / len(era)
 
     def return_ERA(self, year=""):
+        """
+        name: return_ERA
+        paramater: self(a Player) and an optional year
+        returns: player's ERA
+        """
         # return player's ERA, either all years or specified year
         if year:
             return self.ERA[year]
@@ -297,7 +396,11 @@ class Player:
             return self.ERA
 
     def get_post_ERA(self, ID):
-        # uses player ID to get their ERA
+        """
+         name: get_post_ERA
+         paramater: self, a Player
+         returns: none, gets player's post season ERA
+         """
         with open("FilteredPitchingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -310,14 +413,22 @@ class Player:
                 self.post_ERA[year] = sum(era) / len(era)
 
     def return_post_ERA(self, year=""):
-        # return player's ERA, either all years or specified year
+        """
+        name: return_post_ERA
+        paramater: self(a Player) and an optional year
+        returns: player's post season hits
+        """
         if year:
             return self.post_ERA[year]
         else:
             return self.post_ERA
 
     def get_innings_pitched_post(self, ID):
-        # Get innings pitched in the playoffs
+        """
+         name: get_innings_pitched_post
+         paramater: self, a Player
+         returns: none, gets player's post season innings pitched
+         """
         with open("FilteredPitchingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -330,6 +441,11 @@ class Player:
                         self.post_pitch_innings[row[2]] = (float(row[13]) / 3.0)
 
     def return_innings_pitched_post(self, year=""):
+        """
+        name: return_innings_pitched_post
+        paramater: self(a Player) and an optional year
+        returns: player's post season innings pitched
+        """
         if year:
             if len(self.post_pitch_innings) != 0:
                 try:
@@ -343,7 +459,11 @@ class Player:
             return self.post_pitch_innings
 
     def get_earned_runs_post(self, ID):
-        # Get total earned runs allowed in the playoffs
+        """
+         name: get_earned_runs_post
+         paramater: self, a Player
+         returns: none, gets player's post season earned runs
+         """
         with open("FilteredPitchingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -356,6 +476,11 @@ class Player:
                         self.post_earned_runs[row[2]] = row[15]
 
     def return_earned_runs_post(self, year=""):
+        """
+        name: return_earned_runs_post
+        paramater: self(a Player) and an optional year
+        returns: player's post season earned runs
+        """
         if year:
             if len(self.post_earned_runs) != 0:
                 try:
@@ -370,7 +495,11 @@ class Player:
             return self.post_earned_runs
 
     def get_pitch_hr(self, ID):
-        # uses player ID to get the amount of hrs they pitched
+        """
+         name: get_pitch_hr
+         paramater: self, a Player
+         returns: none, gets player's post season home runs allowed
+         """
         with open("FilteredPitching.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -381,14 +510,22 @@ class Player:
                         self.pitch_hr[row[2]] = int(row[16])
 
     def return_pitch_hr(self, year=""):
-        # return amount of hrs player pitched, either all years or specified year
+        """
+        name: return_pitch_hr
+        paramater: self(a Player) and an optional year
+        returns: player's home runs allowed
+        """
         if year:
             return self.pitch_hr[year]
         else:
             return self.pitch_hr
 
     def get_post_pitch_hr(self, ID):
-        # uses player ID to get the amount of hrs they pitched post season
+        """
+         name: get_post_pitch_hr
+         paramater: self, a Player
+         returns: none, gets player's post season home runs allowed
+         """
         with open("FilteredPitchingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -399,13 +536,15 @@ class Player:
                         self.post_pitch_hr[row[2]] = int(row[16])
 
     def return_post_pitch_hr(self, year=""):
-        # return amount of hrs player pitched post, either all years or specified year
+        """
+        name: return_post_pitch_hr
+        paramater: self(a Player) and an optional year
+        returns: player's post season home runs allowed
+        """
         if year:
             return self.post_pitch_hr[year]
         else:
             return self.post_pitch_hr
-
-            # add homeruns from batter and homeruns from pitcher pre and post
 
     # How to print   
     def __repr__(self):
