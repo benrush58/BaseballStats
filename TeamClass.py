@@ -52,7 +52,11 @@ class Team:
                     self.wins = wins / (wins + losses)
 
     def return_wins(self):
-        # returns win percentage
+        """
+        name: return_wins
+        paramater: self(a Team)
+        returns: Team's wins
+        """
         return self.wins
 
     def get_rank(self):
@@ -64,11 +68,19 @@ class Team:
                     self.rank = row[6]
 
     def return_rank(self):
-        """returns team's rank at end of season"""
+        """
+        name: return_rank
+        paramater: self(a Team)
+        returns: Team's rank at the end of that season
+        """
         return self.rank
 
     def reg_ba(self):
-        """ Returns regular season team batting average"""
+        """
+        name: return_ba
+        paramater: self(a Team)
+        returns: Team's batting average
+        """
         hits = 0
         pa = 0
         for player in list(self.players.values()):
@@ -82,7 +94,11 @@ class Team:
             return 'No player BAs found'
 
     def post_ba(self):
-        """ Returns post season team batting average"""
+        """
+        name: post_ba
+        paramater: self(a Team)
+        returns: Team's post season batting average
+        """
         hits = 0
         pa = 0
         for player in list(self.players.values()):
@@ -96,7 +112,11 @@ class Team:
             return 'No player BAs found'
 
     def reg_era(self):
-        """ Returns regular season team ERA """
+        """
+        name: reg_era
+        paramater: self(a Team)
+        returns: Team's ERA
+        """
         with open('FilteredTeams.csv') as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -105,7 +125,11 @@ class Team:
 
 
     def post_era(self):
-        """ Returns post season team ERA """
+        """
+        name: post_era
+        paramater: self(a Team)
+        returns: Team's post season ERA
+        """
         earned_runs = 0
         innings_pitched = 0
         for player in list(self.players.values()):
@@ -121,7 +145,11 @@ class Team:
             return 'No player ERAs found'
 
     def reg_hra(self):
-        """ Returns regular season team HR average per at bat """
+        """
+        name: reg_hra
+        paramater: self(a Team)
+        returns: Team's season HR average per at bat
+        """
         with open('FilteredTeams.csv') as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -129,7 +157,11 @@ class Team:
                     return int(row[20]) / int(row[16])
 
     def post_hra(self):
-        """ Returns post season team HR average per at bat """
+        """
+        name: post_hra
+        paramater: self(a Team)
+        returns: Team's post season HR average per at bat
+        """
         hra_sum = 0
         num_rows = 0
         for id, player in list(self.players.items()):
@@ -145,7 +177,11 @@ class Team:
             return 'No player HRs found'
 
     def pitch_reg_hra(self):
-        """ Returns regular season team HR allowed average per inning """
+        """
+        name: pitch_reg_hra
+        paramater: self(a Team)
+        returns: Team's HR allowed average per inning
+        """
         with open('FilteredTeams.csv') as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
@@ -153,7 +189,11 @@ class Team:
                     return int(row[35]) / (int(row[33]) / 3)
 
     def pitch_post_hra(self):
-        """ Returns post season team HR allowed average per inning """
+        """
+        name: pitch_post_hra
+        paramater: self(a Team)
+        returns: Team's post season HR allowed average per inning
+        """
         hra_sum = 0
         num_rows = 0
         for id, player in list(self.players.items()):
