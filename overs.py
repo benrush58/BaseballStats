@@ -6,7 +6,13 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 
+
 def plot_stats(team_df):
+    """
+    name: plot_stats
+    parameters: team_df, a data frame with all the team data
+    returns: none, a plot
+    """
     """ Plots the 4 stats we are using on 4 different scatterplots with
     regular season and post season differentiated by color """
     for i in range(0, len(team_df.columns), 2):
@@ -16,12 +22,22 @@ def plot_stats(team_df):
 
 
 def plot_summary(stats_df):
+    """
+    name: plot_summary
+    parameters: stats_df, a data frame
+    returns: none, a plot
+    """
     """ Scatterplot of the summary statistics for the team across different years """
     sns.lineplot(data=stats_df)
     plt.show()
 
 
 def normalize(df):
+    """
+    name: normalize
+    paramater: df, a data frame
+    returns: df, a data frame with normalized values
+    """
     """ Scales all of the columns in the dataframe to values between 0 and 1 """
     index = df.index
     cols = df.columns
@@ -31,27 +47,24 @@ def normalize(df):
     return df
 
 
-
 def get_team_stats(teams):
-    # Program intakes list of teams and gets all stats for the teams
+    """
+    name: get_team_stats
+    parameters: teams, a list of the years of teams
+    returns: a nested dictionary with relevent statistics
+    """
+    """ Calculates the stats we are using for regular season and post season.
+    Returns a dictionary with name of the stats as keys and the stat value as values """
 
     years = {}
 
     for team in teams:
-        # reg_batavg = team.reg_ba()
-        # post_batavg = team.post_ba()
-        # reg_era = team.reg_era()
-        # post_era = team.post_era()
-        # reg_hra = team.reg_hra()
-        # post_hra= team.post_hra()
-        # pitch_reg_hra = team.pitch_reg_hra()
-        # pitch_post_hra = team.pitch_post_hra()
-
-        years[team.id + team.year] = {"reg_batavg": team.reg_ba(), "post_batavg": team.post_ba(), "reg_era": team.reg_era(),
-                            "post_era": team.post_era(), "reg_hra": team.reg_hra(), "post_hra": team.post_hra(),
-                            "pitch_reg_hra": team.pitch_reg_hra(), "pitch_post_hra": team.pitch_post_hra()}
+        years[team.id + team.year] = {"reg_batavg": team.reg_ba(), "post_batavg": team.post_ba(),
+                                      "reg_era": team.reg_era(),
+                                      "post_era": team.post_era(), "reg_hra": team.reg_hra(),
+                                      "post_hra": team.post_hra(),
+                                      "pitch_reg_hra": team.pitch_reg_hra(), "pitch_post_hra": team.pitch_post_hra()}
     return years
-
 
 
 def main():
@@ -63,13 +76,10 @@ def main():
     dodgers18 = Team('LAN', '2018')
     over_teams = [astros15, dodgers16, yanks17, astros17, dodgers18]
 
-    print(dodgers18.year)
-
     over_stats = get_team_stats(over_teams)
     print(over_stats)
     over = pd.read_csv("Overs.csv", index_col=0)
     over = over.swapaxes('index', 'columns')
-    print(over)
     plot_stats(over)
 
     # creating new dataframes based on pitching vs batting stats (regular season)
@@ -88,7 +98,7 @@ def main():
 
     # predicting the standing of the team based on the 4 stats (numbers chosen based on the visualization)
     over_reg_scaled['Pred_Rank'] = over_reg_scaled['Reg_BA'] * 0.15 + over_reg_scaled['Reg_HR_avg'] * 0.6 + \
-                                  over_reg_scaled['Reg_ERA'] * 0.15 + over_reg_scaled['Reg_HRA_avg'] * 0.1
+                                   over_reg_scaled['Reg_ERA'] * 0.15 + over_reg_scaled['Reg_HRA_avg'] * 0.1
 
     print(over_reg_scaled)
 
@@ -108,7 +118,7 @@ def main():
 
     # again trying to predict post season success based off the 4 stats (numbers chosen based off visualization)
     over_post_scaled['Pred_Round'] = over_post_scaled['Post_BA'] * 0.15 + over_post_scaled['Post_HR_avg'] * 0.1 + \
-                                    over_post_scaled['Post_ERA'] * 0.7 + over_post_scaled['Post_HRA_avg'] * 0.1
+                                     over_post_scaled['Post_ERA'] * 0.7 + over_post_scaled['Post_HRA_avg'] * 0.1
 
     print(over_post_scaled)
 
@@ -116,8 +126,9 @@ def main():
 
     # one final comparison of the actual and predicted ranks and rounds for each season
     # (is there any correlation between the stats and actually winning?)
-    over_overall = pd.concat([over_reg_scaled[['Reg_Rank', 'Pred_Rank']], over_post_scaled[['Post_Round', 'Pred_Round']]],
-                            axis=1)
+    over_overall = pd.concat(
+        [over_reg_scaled[['Reg_Rank', 'Pred_Rank']], over_post_scaled[['Post_Round', 'Pred_Round']]],
+        axis=1)
 
     print(over_overall)
 

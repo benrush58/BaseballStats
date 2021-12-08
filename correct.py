@@ -7,6 +7,11 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 
 def plot_stats(team_df):
+    """
+    name: plot_stats
+    parameters: team_df, a data frame with all the team data
+    returns: none, a plot
+    """
     """ Plots the 4 stats we are using on 4 different scatterplots with
     regular season and post season differentiated by color """
     for i in range(0, len(team_df.columns), 2):
@@ -16,12 +21,22 @@ def plot_stats(team_df):
 
 
 def plot_summary(stats_df):
+    """
+    name: plot_summary
+    parameters: stats_df, a data frame
+    returns: none, a plot
+    """
     """ Scatterplot of the summary statistics for the team across different years """
     sns.lineplot(data=stats_df)
     plt.show()
 
 
 def normalize(df):
+    """
+    name: normalize
+    paramater: df, a data frame
+    returns: df, a data frame with normalized values
+    """
     """ Scales all of the columns in the dataframe to values between 0 and 1 """
     index = df.index
     cols = df.columns
@@ -33,20 +48,17 @@ def normalize(df):
 
 
 def get_team_stats(teams):
-    # Program intakes list of teams and gets all stats for the teams
+    """
+    name: get_team_stats
+    parameters: teams, a list of the years of teams
+    returns: a nested dictionary with relevent statistics
+    """
+    """ Calculates the stats we are using for regular season and post season.
+    Returns a dictionary with name of the stats as keys and the stat value as values """
 
     years = {}
 
     for team in teams:
-        # reg_batavg = team.reg_ba()
-        # post_batavg = team.post_ba()
-        # reg_era = team.reg_era()
-        # post_era = team.post_era()
-        # reg_hra = team.reg_hra()
-        # post_hra= team.post_hra()
-        # pitch_reg_hra = team.pitch_reg_hra()
-        # pitch_post_hra = team.pitch_post_hra()
-
         years[team.id + team.year] = {"reg_batavg": team.reg_ba(), "post_batavg": team.post_ba(), "reg_era": team.reg_era(),
                             "post_era": team.post_era(), "reg_hra": team.reg_hra(), "post_hra": team.post_hra(),
                             "pitch_reg_hra": team.pitch_reg_hra(), "pitch_post_hra": team.pitch_post_hra()}
@@ -55,7 +67,7 @@ def get_team_stats(teams):
 
 
 def main():
-    # Teams that correctperformed
+    # Teams that correctly performed
     redsox16 = Team('BOS', "2016")
     redsox17 = Team('BOS', "2017")
     redsox18 = Team('BOS', "2018")
@@ -121,15 +133,6 @@ def main():
 
     plot_summary(correct_correctall)
 
-
-    """
-    Batting average did what was expected: 
-    - overperform: 1
-    - underperform: 5
-    ERA did what was expected:
-    - overperform: 1
-    - underperform: 3
-    """
 
 if __name__ == '__main__':
     main()

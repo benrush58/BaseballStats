@@ -64,26 +64,11 @@ class Team:
                     self.rank = row[6]
 
     def return_rank(self):
-        # returns team's rank at end of season
+        """returns team's rank at end of season"""
         return self.rank
-    """
-    def reg_ba(self):
-        """ # Returns regular season team BA
-    """
-        ba_sum = 0
-        num_ba = 0
-        for player in list(self.players.values()):
-            ba = player.return_bat_avg()
-            if self.year in ba.keys():
-                num_ba += 1
-                ba_sum += float(ba[self.year])
-        if num_ba != 0:
-            return ba_sum / num_ba
-        else:
-            return 'No player BAs found'
-    """
 
     def reg_ba(self):
+        """ Returns regular season team batting average"""
         hits = 0
         pa = 0
         for player in list(self.players.values()):
@@ -95,24 +80,9 @@ class Team:
             return hits / pa
         else:
             return 'No player BAs found'
-    """
-    def post_ba(self):
-        """# Returns post season team BA
-    """
-        ba_sum = 0
-        num_ba = 0
-        for player in list(self.players.values()):
-            ba = player.return_post_bat_avg()
-            if self.year in ba.keys():
-                num_ba += 1
-                ba_sum += float(ba[self.year])
-        if num_ba != 0:
-            return ba_sum / num_ba
-        else:
-            return 'No player BAs found'
-    """
 
     def post_ba(self):
+        """ Returns post season team batting average"""
         hits = 0
         pa = 0
         for player in list(self.players.values()):
