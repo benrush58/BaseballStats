@@ -67,7 +67,7 @@ def main():
 
     over_stats = get_team_stats(over_teams)
     print(over_stats)
-    over = pd.read_csv("Overs.csv", index_col=0)
+    over = pd.read_csv("data_csv/Overs.csv", index_col=0)
     over = over.swapaxes('index', 'columns')
     print(over)
     plot_stats(over)

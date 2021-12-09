@@ -93,7 +93,7 @@ def main():
     stats = get_team_stats(teams)
     print(stats)
 
-    redsox = pd.read_csv('redsox.csv', index_col=0)
+    redsox = pd.read_csv('data_csv/redsox.csv', index_col=0)
     redsox = redsox.swapaxes('index', 'columns')
     plot_stats(redsox)
 

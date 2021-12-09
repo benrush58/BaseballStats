@@ -140,7 +140,7 @@ if __name__ == "__main__":
     """
 
     # reading from csv to make the process faster
-    dodgers = pd.read_csv('Dodgers.csv', index_col=0)
+    dodgers = pd.read_csv('data_csv/Dodgers.csv', index_col=0)
     dodgers = dodgers.swapaxes('index', 'columns')
 
     print(dodgers)

@@ -118,7 +118,7 @@ if __name__ == "__main__":
     """
     
     # reading from csv to make the process faster
-    yanks = pd.read_csv('Yanks.csv', index_col=0)
+    yanks = pd.read_csv('data_csv/Yanks.csv', index_col=0)
     yanks = yanks.swapaxes('index', 'columns')
 
     print(yanks)

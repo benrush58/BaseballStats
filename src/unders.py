@@ -65,7 +65,7 @@ def main():
 
     under_stats = get_team_stats(under_teams)
     print(under_stats)
-    under = pd.read_csv("Unders.csv", index_col=0)
+    under = pd.read_csv("data_csv/Unders.csv", index_col=0)
     under = under.swapaxes('index', 'columns')
     plot_stats(under)
 
