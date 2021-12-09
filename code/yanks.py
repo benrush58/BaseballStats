@@ -15,23 +15,38 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
+import math
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 
 
 def plot_stats(team_df):
-    """ Plots the 4 stats we are using on 4 different scatterplots with
-    regular season and post season differentiated by color """
+    """ 
+    name: plot_stats
+    parameters: team_df, a data frame with all the team data
+    returns: none, a plot 
+    """
+    #Plots the 4 stats we are using on 4 different scatterplots with
+    #regular season and post season differentiated by color
+    titles = ["Batting Average", "HR", "ERA", "HRA"]
+    
     for i in range(0, len(team_df.columns), 2):
         df = team_df.iloc[:, [i, i + 1]]
+        plt.title(f"NYY Regular vs Postseason {titles[math.floor(i/2)]}")
         sns.scatterplot(data=df)
         plt.show()
 
 
 def calculate_team_stats(teams):
-    """ Calculates the stats we are using for regular season and post season.
-    Returns a dictionary with name of the stats as keys and the stat value as values """
+    """ 
+    name: calculate_team_stats
+    parameters: teams, a list of the years of teams
+    returns: a nested dictionary with each team's statistics for regular and posteason
+    """
+    #Calculates the stats we are using for regular season and post season for each team.
+    #Returns a dictionary with name of the stats as keys and the stat value as values
+    #for each team for all five seasons
     teams_stats = {}
 
     for team in teams:
@@ -51,13 +66,23 @@ def calculate_team_stats(teams):
 
 
 def plot_summary(stats_df):
-    """ Scatterplot of the summary statistics for the team across different years """
+    """ 
+    name: plot_summary
+    parameters: stats_df, a data frame
+    returns: none, plot
+    """
+    #Scatterplot of the summary statistics for the team across different years
     sns.lineplot(data=stats_df)
     plt.show()
 
 
 def normalize(df):
-    """ Scales all of the columns in the dataframe to values between 0 and 1 """
+    """ 
+    name: normalize
+    paramater: df, a data frame
+    returns: df, a data frame with normalized values
+    """
+    #Scales all of the columns in the dataframe to values between 0 and 1
     index = df.index
     cols = df.columns
     scaler = MinMaxScaler()
@@ -66,21 +91,23 @@ def normalize(df):
     return df
 
 if __name__ == "__main__":
-    yanks15 = Team('NYY', '2015')
-    yanks16 = Team('NYY', '2016')
-    yanks17 = Team('NYY', '2017')
-    yanks18 = Team('NYY', '2018')
-    yanks19 = Team('NYY', '2019')
+    yanks15 = Team('NYA', '2015')
+    yanks16 = Team('NYA', '2016')
+    yanks17 = Team('NYA', '2017')
+    yanks18 = Team('NYA', '2018')
+    yanks19 = Team('NYA', '2019')
 
     teams = [yanks15, yanks16, yanks17, yanks18, yanks19]
     """
-    some stats I pulled from online just for reference
+    Data from mlb.com for comparison
     2015: 87-75, lost to Astros in Wild Card
     2016: 84-78, Missed the playoffs
     2017: 91-71, lost in ALCS to Astros
     2018: 100-62, lost in ALDS to Red Sox
     2019: 103-59, lost in ALCS to Astros
-    """   
+    """
+    #Creation of the csv, commented out for faster runtime
+    #and use for specific python file
     """
     teams_stats = calculate_team_stats(teams)
     yanks = pd.DataFrame(teams_stats)
@@ -90,8 +117,6 @@ if __name__ == "__main__":
     yanks.to_csv('Yanks.csv')
     """
     
-    #code below is used in Astros and Dodgers files
-
     # reading from csv to make the process faster
     yanks = pd.read_csv('Yanks.csv', index_col=0)
     yanks = yanks.swapaxes('index', 'columns')
@@ -110,7 +135,7 @@ if __name__ == "__main__":
 
     # recombining the dataframes and adding inverse rank based on winning percentage/standings
     yanks_reg = pd.concat([yanks_reg_bat, yanks_reg_pitch], axis=1)
-    yanks_reg['Reg_Rank'] = [0.2, 0.125, 0.5, 0.5, 1]
+    yanks_reg['Reg_Rank'] = [0.11, 0.067, 0.125, 0.33, 0.33]
 
     # normalizing all of the values
     yanks_reg_scaled = normalize(yanks_reg)
@@ -131,11 +156,11 @@ if __name__ == "__main__":
     yanks_post = pd.concat([yanks_post_bat, yanks_post_pitch], axis=1)
 
     # instead of rank, I used round to represent the round they lost in the playoffs (or 5 if they won world series)
-    yanks_post['Post_Round'] = [2, np.NaN, 5, 3, 4]
+    yanks_post['Post_Round'] = [1, np.NaN, 3, 2, 3]
 
     yanks_post_scaled = normalize(yanks_post)
 
-    # again trying to predict post season success based off the 4 stats (numbers chosen based off visualization)
+    # trying to predict post season success based off the 4 stats (numbers chosen based off of visualization)
     yanks_post_scaled['Pred_Round'] = yanks_post_scaled['Post_BA'] * 0.15 + yanks_post_scaled['Post_HR_avg'] * 0.1 + \
                                      yanks_post_scaled['Post_ERA'] * 0.7 + yanks_post_scaled['Post_HRA_avg'] * 0.1
 
@@ -143,7 +168,7 @@ if __name__ == "__main__":
 
     plot_summary(yanks_post_scaled)
 
-    # one final comparison of the actual and predicted ranks and rounds for each season
+    # another comparison of the actual and predicted ranks and rounds for each season
     # (is there any correlation between the stats and actually winning?)
     yanks_overall = pd.concat([yanks_reg_scaled[['Reg_Rank', 'Pred_Rank']], yanks_post_scaled[['Post_Round', 'Pred_Round']]], axis=1)
 
