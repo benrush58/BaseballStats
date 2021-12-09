@@ -50,7 +50,7 @@ def normalize(df):
 
 def main():
     # reading data from appropriate team csv
-    astros = pd.read_csv('Astros.csv', index_col=0)
+    astros = pd.read_csv('data_csv/Astros.csv', index_col=0)
     astros = astros.swapaxes('index', 'columns')
 
     # plotting BA, ERA, HR, HRA

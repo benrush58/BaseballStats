@@ -38,15 +38,6 @@ def get_team_stats(teams):
     years = {}
 
     for team in teams:
-        # reg_batavg = team.reg_ba()
-        # post_batavg = team.post_ba()
-        # reg_era = team.reg_era()
-        # post_era = team.post_era()
-        # reg_hra = team.reg_hra()
-        # post_hra= team.post_hra()
-        # pitch_reg_hra = team.pitch_reg_hra()
-        # pitch_post_hra = team.pitch_post_hra()
-
         years[team.id + team.year] = {"reg_batavg": team.reg_ba(), "post_batavg": team.post_ba(), "reg_era": team.reg_era(),
                             "post_era": team.post_era(), "reg_hra": team.reg_hra(), "post_hra": team.post_hra(),
                             "pitch_reg_hra": team.pitch_reg_hra(), "pitch_post_hra": team.pitch_post_hra()}
@@ -66,7 +57,7 @@ def main():
 
     correct_stats = get_team_stats(correct_teams)
     print(correct_stats)
-    correct = pd.read_csv("Correct.csv", index_col=0)
+    correct = pd.read_csv("data_csv/Correct.csv", index_col=0)
     correct = correct.swapaxes('index', 'columns')
     plot_stats(correct)
 
