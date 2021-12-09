@@ -73,7 +73,7 @@ class Player:
         paramater: self(a Player)
         returns: none, gets player's ID
         """
-        with open("People.csv") as file:
+        with open("data_csv/People.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[13] == First and row[14] == Last:  # find row by name
@@ -86,7 +86,7 @@ class Player:
         returns: none, gets player's name
         """
         # uses id of player to get their name from people.csv
-        with open("People.csv") as file:
+        with open("data_csv/People.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[0] == ID:
@@ -116,7 +116,7 @@ class Player:
         paramater: self, a Player
         returns: none, gets player's batting average
         """
-        with open("FilteredBatting.csv") as file:
+        with open("data_csv/FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID and int(row[7]) != 0:  # get row with player's id
@@ -145,7 +145,7 @@ class Player:
         paramater: self, a Player
         returns: none, gets player's plate appearances
         """
-        with open("FilteredBatting.csv") as file:
+        with open("data_csv/FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID and int(row[7]) != 0:  # get row with player's id
@@ -181,7 +181,7 @@ class Player:
         paramater: self, a Player
         returns: none, gets player's hits
         """
-        with open("FilteredBatting.csv") as file:
+        with open("data_csv/FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID and int(row[7]) != 0:  # get row with player's id
@@ -217,7 +217,7 @@ class Player:
         paramater: self, a Player
         returns: none, gets player's post season batting average
         """
-        with open("FilteredBattingPost.csv") as file:
+        with open("data_csv/FilteredBattingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[3] == ID and int(row[7]) != 0:  # get row with player's id
@@ -247,7 +247,7 @@ class Player:
         paramater: self, a Player
         returns: none, gets player's post season plate appearances
         """
-        with open("FilteredBattingPost.csv") as file:
+        with open("data_csv/FilteredBattingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[3] == ID and int(row[7]) != 0:  # get row with player's id
@@ -283,7 +283,7 @@ class Player:
          paramater: self, a Player
          returns: none, gets player's post season hits
          """
-        with open("FilteredBattingPost.csv") as file:
+        with open("data_csv/FilteredBattingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[3] == ID and int(row[7]) != 0:  # get row with player's id
@@ -319,7 +319,7 @@ class Player:
          paramater: self, a Player
          returns: none, gets player's home run total
          """
-        with open("FilteredBatting.csv") as file:
+        with open("data_csv/FilteredBatting.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID:
@@ -345,7 +345,7 @@ class Player:
          paramater: self, a Player
          returns: none, gets player's post season home run total
          """
-        with open("FilteredBattingPost.csv") as file:
+        with open("data_csv/FilteredBattingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[3] == ID:
@@ -372,7 +372,7 @@ class Player:
          paramater: self, a Player
          returns: none, gets player's post season plate appearances
          """
-        with open("FilteredPitching.csv") as file:
+        with open("data_csv/FilteredPitching.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID:
@@ -401,7 +401,7 @@ class Player:
          paramater: self, a Player
          returns: none, gets player's post season ERA
          """
-        with open("FilteredPitchingPost.csv") as file:
+        with open("data_csv/FilteredPitchingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID and row[20] != 'inf':
@@ -429,7 +429,7 @@ class Player:
          paramater: self, a Player
          returns: none, gets player's post season innings pitched
          """
-        with open("FilteredPitchingPost.csv") as file:
+        with open("data_csv/FilteredPitchingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID:
@@ -464,7 +464,7 @@ class Player:
          paramater: self, a Player
          returns: none, gets player's post season earned runs
          """
-        with open("FilteredPitchingPost.csv") as file:
+        with open("data_csv/FilteredPitchingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID:
@@ -500,7 +500,7 @@ class Player:
          paramater: self, a Player
          returns: none, gets player's post season home runs allowed
          """
-        with open("FilteredPitching.csv") as file:
+        with open("data_csv/FilteredPitching.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID:
@@ -526,7 +526,7 @@ class Player:
          paramater: self, a Player
          returns: none, gets player's post season home runs allowed
          """
-        with open("FilteredPitchingPost.csv") as file:
+        with open("data_csv/FilteredPitchingPost.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == ID:

@@ -35,7 +35,7 @@ class Team:
         """
         """goes through Appearances file, creates player object for any player
         that is in the team that year and adds object to players dict"""
-        with open("FilteredAppearances.csv") as file:
+        with open("data_csv/FilteredAppearances.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == self.year and row[2] == self.id:
@@ -55,7 +55,7 @@ class Team:
         paramater: self(a Team)
         returns: none, gets win percentage of Teeam
         """
-        with open("FilteredTeams.csv") as file:
+        with open("data_csv/FilteredTeams.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == self.year and row[3] == self.id:
@@ -77,7 +77,7 @@ class Team:
         paramater: self(a Team)
         returns: none, gets rank of team
         """
-        with open("FilteredTeams.csv") as file:
+        with open("data_csv/FilteredTeams.csv") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == self.year and row[3] == self.id:
@@ -133,7 +133,7 @@ class Team:
         paramater: self(a Team)
         returns: Team's ERA
         """
-        with open('FilteredTeams.csv') as file:
+        with open('data_csv/FilteredTeams.csv') as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == self.year and row[3] == self.id:
@@ -166,7 +166,7 @@ class Team:
         paramater: self(a Team)
         returns: Team's season HR average per at bat
         """
-        with open('FilteredTeams.csv') as file:
+        with open('data_csv/FilteredTeams.csv') as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == self.year and row[3] == self.id:
@@ -181,7 +181,7 @@ class Team:
         hra_sum = 0
         num_rows = 0
         for id, player in list(self.players.items()):
-            with open('FilteredBattingPost.csv') as file:
+            with open('data_csv/FilteredBattingPost.csv') as file:
                 csv_reader = csv.reader(file)
                 for row in csv_reader:
                     if row[1] == self.year and row[3] == id and int(row[7]) != 0:
@@ -198,7 +198,7 @@ class Team:
         paramater: self(a Team)
         returns: Team's HR allowed average per inning
         """
-        with open('FilteredTeams.csv') as file:
+        with open('data_csv/FilteredTeams.csv') as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row[1] == self.year and row[3] == self.id:
@@ -213,7 +213,7 @@ class Team:
         hra_sum = 0
         num_rows = 0
         for id, player in list(self.players.items()):
-            with open('FilteredPitchingPost.csv') as file:
+            with open('data_csv/FilteredPitchingPost.csv') as file:
                 csv_reader = csv.reader(file)
                 for row in csv_reader:
                     if row[2] == self.year and row[1] == id and int(row[13]) != 0:
